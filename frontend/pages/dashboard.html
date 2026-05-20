@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — CutMaster Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080810;
+      --bg2: #0d0d1a;
+      --card: #13132a;
+      --card2: #1a1a30;
+      --accent: #ff3e6c;
+      --accent2: #6c3eff;
+      --accent3: #00e5ff;
+      --gold: #ffd700;
+      --text: #f0f0ff;
+      --text2: #a0a0c0;
+      --text3: #505070;
+      --border: rgba(255, 255, 255, 0.07);
+      --sw: 220px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent2);
+      border-radius: 2px;
+    }
+
+    /* SIDEBAR */
+    .sb {
+      width: var(--sw);
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sb-logo {
+      padding: 1.4rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sb-logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+      text-decoration: none;
+    }
+
+    .sb-logo-text span {
+      -webkit-text-fill-color: var(--accent3);
+    }
+
+    .sb-logo p {
+      font-size: 0.65rem;
+      color: var(--text3);
+      margin-top: 0.2rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 0.8rem 0;
+      overflow-y: auto;
+    }
+
+    .nav-sec {
+      padding: 0.4rem 1rem;
+      font-size: 0.62rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 0.5rem;
+    }
+
+    .ni {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.65rem 1.2rem;
+      color: var(--text3);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .ni:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .ni.active {
+      color: var(--text);
+      background: linear-gradient(90deg, rgba(255, 62, 108, 0.15), transparent);
+      border-left: 2px solid var(--accent);
+    }
+
+    .ni-ic {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .ni-badge {
+      margin-left: auto;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 20px;
+    }
+
+    .sb-bot {
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .uc {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .ua {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .un {
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .up {
+      font-size: 0.68rem;
+      color: var(--text3);
+    }
+
+    .lo-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--text3);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.2rem;
+      transition: color 0.2s;
+    }
+
+    .lo-btn:hover {
+      color: var(--accent);
+    }
+
+    /* MAIN */
+    .main {
+      margin-left: var(--sw);
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .tb-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+    }
+
+    .tb-right {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 0.55rem 1.2rem;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .btn-p {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+
+    .btn-p:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 20px rgba(255, 62, 108, 0.3);
+    }
+
+    .btn-g {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text2);
+    }
+
+    .btn-g:hover {
+      border-color: var(--accent3);
+      color: var(--accent3);
+    }
+
+    .btn-d {
+      background: rgba(255, 62, 108, 0.1);
+      border: 1px solid rgba(255, 62, 108, 0.2);
+      color: var(--accent);
+    }
+
+    .btn-d:hover {
+      background: rgba(255, 62, 108, 0.2);
+    }
+
+    /* CONTENT */
+    .content {
+      padding: 1.5rem 2rem;
+      flex: 1;
+    }
+
+    .sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sec-title a {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      color: var(--accent3);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .sc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.2rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sc::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+    }
+
+    .sc:nth-child(1)::before {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .sc:nth-child(2)::before {
+      background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    }
+
+    .sc:nth-child(3)::before {
+      background: linear-gradient(90deg, var(--accent3), #00b4a0);
+    }
+
+    .sc:nth-child(4)::before {
+      background: linear-gradient(90deg, var(--gold), #ff8c00);
+    }
+
+    .sc-ic {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .sc-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .sc-lbl {
+      font-size: 0.75rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 0.2rem;
+    }
+
+    .sc-sub {
+      font-size: 0.72rem;
+      color: var(--accent3);
+      margin-top: 0.3rem;
+    }
+
+    .sbar {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      height: 5px;
+      margin-top: 0.6rem;
+      overflow: hidden;
+    }
+
+    .sfill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent3), var(--accent2));
+      transition: width 1s ease;
+    }
+
+    /* PROJECTS */
+    .pg {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .pc:hover {
+      transform: translateY(-4px);
+      border-color: rgba(108, 62, 255, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .pt {
+      aspect-ratio: 9/16;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+    }
+
+    .pt.r169 {
+      aspect-ratio: 16/9 !important;
+    }
+
+    .pt.r11 {
+      aspect-ratio: 1/1 !important;
+    }
+
+    .ps {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .ps.draft {
+      background: rgba(255, 215, 0, 0.2);
+      color: var(--gold);
+    }
+
+    .ps.exported {
+      background: rgba(0, 229, 255, 0.2);
+      color: var(--accent3);
+    }
+
+    .pa {
+      position: absolute;
+      bottom: 3.5rem;
+      right: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .pc:hover .pa {
+      opacity: 1;
+    }
+
+    .pab {
+      width: 28px;
+      height: 28px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pab:hover {
+      background: var(--card2);
+      border-color: var(--accent);
+    }
+
+    .pi2 {
+      padding: 0.7rem 0.8rem;
+    }
+
+    .pn {
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pm {
+      font-size: 0.68rem;
+      color: var(--text3);
+      margin-top: 0.15rem;
+    }
+
+    .new-pc {
+      background: none;
+      border: 2px dashed rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .new-pc:hover {
+      border-color: var(--accent2);
+      background: rgba(108, 62, 255, 0.05);
+    }
+
+    .new-ic {
+      width: 44px;
+      height: 44px;
+      background: rgba(108, 62, 255, 0.15);
+      border: 1px solid rgba(108, 62, 255, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .new-lbl {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text3);
+    }
+
+    /* VIDEOS */
+    .vg {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .vc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .vc:hover {
+      border-color: rgba(255, 62, 108, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .vt {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0a0a20, #200030);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      position: relative;
+    }
+
+    .vp {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 1.5rem;
+    }
+
+    .vc:hover .vp {
+      opacity: 1;
+    }
+
+    .vi {
+      padding: 0.65rem;
+    }
+
+    .vn {
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .vs {
+      font-size: 0.68rem;
+      color: var(--text3);
+    }
+
+    /* UPLOAD */
+    .uz {
+      border: 2px dashed rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 1.5rem;
+    }
+
+    .uz:hover,
+    .uz.drag {
+      border-color: var(--accent2);
+      background: rgba(108, 62, 255, 0.05);
+    }
+
+    .uz-ic {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .uz-t {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .uz-s {
+      font-size: 0.78rem;
+      color: var(--text3);
+    }
+
+    .up-bar {
+      margin-top: 0.8rem;
+      display: none;
+    }
+
+    .pb {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      height: 5px;
+      overflow: hidden;
+    }
+
+    .pf {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.3s;
+      width: 0%;
+    }
+
+    .pt2 {
+      font-size: 0.72rem;
+      color: var(--text3);
+      margin-top: 0.3rem;
+    }
+
+    /* TEMPLATES */
+    .tg {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tc:hover {
+      border-color: rgba(255, 62, 108, 0.4);
+      transform: scale(1.04);
+    }
+
+    .tt {
+      aspect-ratio: 9/16;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      position: relative;
+    }
+
+    .tl {
+      position: absolute;
+      top: 0.4rem;
+      left: 0.4rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 5px;
+      font-size: 0.56rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .tl.pro {
+      background: rgba(255, 215, 0, 0.25);
+      color: var(--gold);
+    }
+
+    .tl.free {
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--accent3);
+    }
+
+    .ti {
+      padding: 0.55rem;
+    }
+
+    .tn {
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .tu {
+      font-size: 0.65rem;
+      color: var(--text3);
+    }
+
+    .t1c {
+      background: linear-gradient(160deg, #1a0050, #500030);
+    }
+
+    .t2c {
+      background: linear-gradient(160deg, #003050, #001540);
+    }
+
+    .t3c {
+      background: linear-gradient(160deg, #004030, #002050);
+    }
+
+    .t4c {
+      background: linear-gradient(160deg, #500000, #300050);
+    }
+
+    .t5c {
+      background: linear-gradient(160deg, #002040, #001540);
+    }
+
+    .t6c {
+      background: linear-gradient(160deg, #301020, #100040);
+    }
+
+    /* MODAL */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 420px;
+    }
+
+    .modal h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+    }
+
+    .mfg {
+      margin-bottom: 1rem;
+    }
+
+    .mfg label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .mfg input,
+    .mfg select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .mfg input:focus,
+    .mfg select:focus {
+      border-color: var(--accent2);
+    }
+
+    .mfg select option {
+      background: var(--card);
+    }
+
+    .ma {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    .ma .btn {
+      flex: 1;
+      padding: 0.85rem;
+    }
+
+    /* UPGRADE */
+    .upgrade-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 700px;
+    }
+
+    .plan {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.8rem;
+    }
+
+    .plan.featured {
+      border-color: var(--accent2);
+    }
+
+    .plan-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .plan-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      line-height: 1;
+    }
+
+    .plan-price span {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text3);
+    }
+
+    .plan-features {
+      list-style: none;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .plan-features li {
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text2);
+    }
+
+    .plan-features li::before {
+      content: '✓ ';
+      color: var(--accent3);
+    }
+
+    /* SETTINGS */
+    .settings-wrap {
+      max-width: 480px;
+    }
+
+    .settings-wrap h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+    }
+
+    .sfg {
+      margin-bottom: 1rem;
+    }
+
+    .sfg label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .sfg input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .sfg input:focus {
+      border-color: var(--accent2);
+    }
+
+    .sfg input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* TOAST */
+    .tc2 {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .toast {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: si 0.3s ease;
+      max-width: 280px;
+    }
+
+    .toast.ok {
+      border-color: rgba(0, 229, 255, 0.3);
+      color: var(--accent3);
+    }
+
+    .toast.err {
+      border-color: rgba(255, 62, 108, 0.3);
+      color: var(--accent);
+    }
+
+    @keyframes si {
+      from {
+        transform: translateX(100%);
+        opacity: 0
+      }
+
+      to {
+        transform: none;
+        opacity: 1
+      }
+    }
+
+    .spin2 {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: sp 0.8s linear infinite;
+      margin: auto;
+    }
+
+    @keyframes sp {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: var(--text3);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 2.5rem;
+      color: var(--text3);
+    }
+
+    .empty .ei {
+      font-size: 2.5rem;
+      margin-bottom: 0.7rem;
+      opacity: 0.5;
+    }
+
+    .empty .et {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text2);
+      margin-bottom: 0.3rem;
+    }
+
+    .empty .es {
+      font-size: 0.8rem;
+    }
+
+    @media(max-width:768px) {
+      .sb {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="tc2" id="toasts"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sb">
+    <div class="sb-logo">
+      <a class="sb-logo-text" href="/">Cut<span>Master</span> Pro</a>
+      <p>// Dashboard</p>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-sec">Main</div>
+      <button class="ni active" id="n-home" onclick="show('home')"><span class="ni-ic">🏠</span> Home</button>
+      <button class="ni" id="n-projects" onclick="show('projects')"><span class="ni-ic">🎬</span> My Projects</button>
+      <button class="ni" id="n-videos" onclick="show('videos')"><span class="ni-ic">📹</span> My Videos</button>
+      <button class="ni" id="n-templates" onclick="show('templates')"><span class="ni-ic">🎨</span> Templates</button>
+      <div class="nav-sec">Tools</div>
+      <button class="ni" onclick="openEditor()"><span class="ni-ic">✂️</span> Open Editor</button>
+      <button class="ni"><span class="ni-ic">🤖</span> AI Tools <span class="ni-badge">NEW</span></button>
+      <div class="nav-sec">Account</div>
+      <button class="ni" id="n-upgrade" onclick="show('upgrade')"><span class="ni-ic">⭐</span> Upgrade Plan</button>
+      <button class="ni" id="n-settings" onclick="show('settings')"><span class="ni-ic">⚙️</span> Settings</button>
+    </nav>
+    <div class="sb-bot">
+      <div class="uc">
+        <div class="ua" id="ua">?</div>
+        <div style="flex:1;min-width:0">
+          <div class="un" id="un">Loading...</div>
+          <div class="up" id="up">Free Plan</div>
+        </div>
+        <button class="lo-btn" onclick="logout()" title="Logout">↩</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-title" id="tb-title">DASHBOARD</div>
+      <div class="tb-right">
+        <button class="btn btn-p" onclick="openModal()">+ New Project</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- HOME -->
+      <div id="sec-home">
+        <div class="stats" id="stats-grid">
+          <div class="loading">
+            <div class="spin2"></div>
+          </div>
+        </div>
+        <div class="sec-title">🎬 Recent Projects <a onclick="show('projects')">See all →</a></div>
+        <div class="pg" id="recent-projects">
+          <div class="loading">
+            <div class="spin2"></div>
+          </div>
+        </div>
+        <div class="sec-title">📹 Recent Videos <a onclick="show('videos')">See all →</a></div>
+        <div class="vg" id="recent-videos">
+          <div class="loading">
+            <div class="spin2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div id="sec-projects" style="display:none">
+        <div class="pg" id="all-projects">
+          <div class="loading">
+            <div class="spin2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEOS -->
+      <div id="sec-videos" style="display:none">
+        <div class="uz" id="uz" onclick="document.getElementById('fi').click()">
+          <div class="uz-ic">📁</div>
+          <div class="uz-t">Upload Videos</div>
+          <div class="uz-s">Click or drag & drop · MP4, MOV, AVI, MKV up to 500MB</div>
+          <div class="up-bar" id="up-bar">
+            <div class="pb">
+              <div class="pf" id="pf"></div>
+            </div>
+            <div class="pt2" id="pt2">Uploading...</div>
+          </div>
+        </div>
+        <input type="file" id="fi" accept="video/*" style="display:none" onchange="uploadVideo(this)">
+        <div class="vg" id="all-videos">
+          <div class="loading">
+            <div class="spin2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEMPLATES -->
+      <div id="sec-templates" style="display:none">
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.2rem;flex-wrap:wrap;">
+          <button class="btn btn-p" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('all')">All</button>
+          <button class="btn btn-g" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('reels')">Reels</button>
+          <button class="btn btn-g" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('vlog')">Vlog</button>
+          <button class="btn btn-g" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('travel')">Travel</button>
+          <button class="btn btn-g" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('dance')">Dance</button>
+          <button class="btn btn-g" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('gaming')">Gaming</button>
+          <button class="btn btn-g" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('food')">Food</button>
+          <button class="btn btn-g" style="font-size:0.78rem;padding:0.4rem 0.9rem"
+            onclick="loadTpls('education')">Education</button>
+        </div>
+        <div class="tg" id="all-tpls">
+          <div class="loading">
+            <div class="spin2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPGRADE -->
+      <div id="sec-upgrade" style="display:none">
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px;margin-bottom:0.5rem">UPGRADE
+          YOUR PLAN</h2>
+        <p style="color:var(--text2);margin-bottom:2rem;font-size:0.95rem">Unlock unlimited AI, 4K export, 500K+
+          templates and more.</p>
+        <div class="upgrade-grid">
+          <div class="plan">
+            <div class="plan-name">PRO</div>
+            <div class="plan-price" style="color:var(--accent)">₹299<span>/mo</span></div>
+            <ul class="plan-features">
+              <li>4K Export</li>
+              <li>Unlimited AI</li>
+              <li>500K+ Templates</li>
+              <li>No Watermark</li>
+              <li>50GB Storage</li>
+            </ul>
+            <button class="btn btn-p" style="width:100%;padding:0.85rem" onclick="upgrade('pro')">Upgrade to
+              Pro</button>
+          </div>
+          <div class="plan featured">
+            <div class="plan-name">BUSINESS</div>
+            <div class="plan-price" style="color:var(--accent2)">₹799<span>/seat/mo</span></div>
+            <ul class="plan-features">
+              <li>Everything in Pro</li>
+              <li>Team Collaboration</li>
+              <li>Brand Kit</li>
+              <li>500GB Storage</li>
+              <li>API Access</li>
+            </ul>
+            <button class="btn"
+              style="width:100%;padding:0.85rem;background:linear-gradient(135deg,var(--accent2),var(--accent3));color:#fff;border:none"
+              onclick="upgrade('business')">Upgrade to Business</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="sec-settings" style="display:none">
+        <div class="settings-wrap">
+          <h3>Profile Settings</h3>
+          <div class="sfg"><label>Display Name</label><input id="s-name" placeholder="Your name"></div>
+          <div class="sfg"><label>Email</label><input id="s-email" disabled></div>
+          <div class="sfg"><label>Avatar URL (optional)</label><input id="s-avatar" placeholder="https://..."></div>
+          <button class="btn btn-p" style="margin-bottom:2rem" onclick="saveSettings()">Save Changes</button>
+          <h3>Change Password</h3>
+          <div class="sfg"><label>Current Password</label><input type="password" id="s-cp"></div>
+          <div class="sfg"><label>New Password</label><input type="password" id="s-np"></div>
+          <button class="btn btn-g" onclick="changePw()">Change Password</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NEW PROJECT MODAL -->
+  <div class="overlay" id="modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <h3>🎬 New Project</h3>
+      <div class="mfg"><label>Project Title</label><input id="m-title" placeholder="My Awesome Video"></div>
+      <div class="mfg"><label>Aspect Ratio</label>
+        <select id="m-ratio">
+          <option value="9:16">9:16 — Reels / TikTok / Shorts</option>
+          <option value="16:9">16:9 — YouTube / Landscape</option>
+          <option value="1:1">1:1 — Square / Instagram</option>
+          <option value="4:5">4:5 — Instagram Portrait</option>
+          <option value="21:9">21:9 — Cinematic</option>
+        </select>
+      </div>
+      <div class="mfg"><label>Frame Rate</label>
+        <select id="m-fps">
+          <option value="24">24 fps — Cinematic</option>
+          <option value="30" selected>30 fps — Standard</option>
+          <option value="60">60 fps — Smooth</option>
+        </select>
+      </div>
+      <div class="ma">
+        <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-p" onclick="createProject()">Create Project →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const APP_BASE = window.location.protocol === 'http:' || window.location.protocol === 'https:'
+      ? window.location.origin
+      : 'http://localhost:5000';
+    const API = APP_BASE + '/api';
+    const token = () => localStorage.getItem('cm_token');
+    const user = () => JSON.parse(localStorage.getItem('cm_user') || '{}');
+
+    // Auth guard
+    if (!localStorage.getItem('cm_token')) window.location.href = APP_BASE + '/frontend/pages/login.html';
+
+    // API helper
+    async function apicall(endpoint, opts = {}) {
+      try {
+        const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token() };
+        const res = await fetch(API + endpoint, { headers, ...opts });
+        if (res.status === 401) { logout(); return null; }
+        return await res.json();
+      } catch (e) { toast('Server error!', 'err'); return null; }
+    }
+
+    // Toast
+    function toast(msg, type = 'ok') {
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      el.innerHTML = (type === 'ok' ? '✓' : '✕') + ' ' + msg;
+      document.getElementById('toasts').appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+
+    // Logout
+    function logout() {
+      localStorage.removeItem('cm_token');
+      localStorage.removeItem('cm_user');
+      window.location.href = APP_BASE + '/frontend/pages/login.html';
+    }
+
+    // Utils
+    function fmtBytes(b) {
+      if (!b) return '0 B';
+      const s = ['B', 'KB', 'MB', 'GB', 'TB'], i = Math.floor(Math.log(b) / Math.log(1024));
+      return (b / Math.pow(1024, i)).toFixed(1) + ' ' + s[i];
+    }
+    function ago(d) {
+      const s = (Date.now() - new Date(d)) / 1000;
+      if (s < 60) return 'just now';
+      if (s < 3600) return Math.floor(s / 60) + 'm ago';
+      if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+      return Math.floor(s / 86400) + 'd ago';
+    }
+    const bgs = ['linear-gradient(160deg,#1a1040,#0d0820)', 'linear-gradient(160deg,#0d2040,#001020)', 'linear-gradient(160deg,#301040,#100020)', 'linear-gradient(160deg,#0d3020,#001010)', 'linear-gradient(160deg,#200020,#100040)'];
+    const emojis = { '9:16': '🎬', '16:9': '🎞️', '1:1': '⬛', '4:5': '📱', '21:9': '🎥' };
+
+    // Section switch
+    function show(name) {
+      document.querySelectorAll('[id^="sec-"]').forEach(s => s.style.display = 'none');
+      document.getElementById('sec-' + name).style.display = 'block';
+      document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+      const ni = document.getElementById('n-' + name);
+      if (ni) ni.classList.add('active');
+      const titles = { home: 'DASHBOARD', projects: 'MY PROJECTS', videos: 'MY VIDEOS', templates: 'TEMPLATES', upgrade: 'UPGRADE PLAN', settings: 'SETTINGS' };
+      document.getElementById('tb-title').textContent = titles[name] || name.toUpperCase();
+      if (name === 'projects') loadProjects();
+      if (name === 'videos') loadVideos();
+      if (name === 'templates') loadTpls('all');
+      if (name === 'settings') loadSettings();
+    }
+
+    // Load dashboard
+    async function loadDashboard() {
+      // Load user info
+      const u = user();
+      if (u.name) {
+        document.getElementById('ua').textContent = u.name[0].toUpperCase();
+        document.getElementById('un').textContent = u.name;
+        document.getElementById('up').textContent = (u.plan || 'free').toUpperCase() + ' Plan';
+      }
+
+      const d = await apicall('/users/dashboard');
+      if (!d || !d.success) { toast('Failed to load dashboard', 'err'); return; }
+      const s = d.stats;
+
+      // Stats
+      const sp = Math.min(100, Math.round((s.storageUsed / s.storageLimit) * 100)) || 0;
+      document.getElementById('stats-grid').innerHTML = `
+      <div class="sc"><div class="sc-ic">🎬</div><div class="sc-val">${s.projectsCount || 0}</div><div class="sc-lbl">Projects</div></div>
+      <div class="sc"><div class="sc-ic">📹</div><div class="sc-val">${s.videosCount || 0}</div><div class="sc-lbl">Videos</div></div>
+      <div class="sc">
+        <div class="sc-ic">☁️</div>
+        <div class="sc-val">${fmtBytes(s.storageUsed || 0)}</div>
+        <div class="sc-lbl">Storage Used</div>
+        <div class="sbar"><div class="sfill" style="width:${sp}%"></div></div>
+        <div class="sc-sub">${sp}% of ${fmtBytes(s.storageLimit || 1073741824)}</div>
+      </div>
+      <div class="sc">
+        <div class="sc-ic">🤖</div>
+        <div class="sc-val">${s.aiUsageToday || 0}/${s.aiLimit || 3}</div>
+        <div class="sc-lbl">AI Today</div>
+        <div class="sc-sub" style="cursor:pointer" onclick="show('upgrade')">${s.plan === 'free' ? 'Upgrade for unlimited ✨' : 'Unlimited ✓'}</div>
+      </div>`;
+
+      // Recent projects
+      renderProjects(d.recentProjects || [], 'recent-projects', true);
+      // Recent videos
+      renderVideos(d.recentVideos || [], 'recent-videos');
+    }
+
+    // Render projects
+    function renderProjects(list, containerId, showNew = false) {
+      const c = document.getElementById(containerId);
+      let html = '';
+      if (showNew) html += `<div class="new-pc" onclick="openModal()"><div class="new-ic">➕</div><div class="new-lbl">New Project</div></div>`;
+      if (!list.length && !showNew) {
+        c.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ei">🎬</div><div class="et">No projects yet</div><div class="es">Create your first project!</div></div>`;
+        return;
+      }
+      const ratioClass = { '16:9': 'r169', '1:1': 'r11' };
+      list.forEach((p, i) => {
+        html += `
+        <div class="pc" onclick="openProjectEditor('${p._id}')">
+          <div class="pt ${ratioClass[p.aspectRatio] || ''}" style="background:${bgs[i % 5]}">
+            ${emojis[p.aspectRatio] || '🎬'}
+            <span class="ps ${p.status || 'draft'}">${p.status || 'draft'}</span>
+            <div class="pa">
+              <div class="pab" onclick="event.stopPropagation();dupProject('${p._id}')" title="Duplicate">📋</div>
+              <div class="pab" onclick="event.stopPropagation();delProject('${p._id}',this)" title="Delete">🗑️</div>
+            </div>
+          </div>
+          <div class="pi2">
+            <div class="pn">${p.title}</div>
+            <div class="pm">${p.aspectRatio} · ${ago(p.lastEditedAt || p.createdAt)}</div>
+          </div>
+        </div>`;
+      });
+      c.innerHTML = html;
+    }
+
+    // Render videos
+    function renderVideos(list, containerId) {
+      const c = document.getElementById(containerId);
+      if (!list.length) {
+        c.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ei">📹</div><div class="et">No videos yet</div><div class="es">Upload your first video!</div></div>`;
+        return;
+      }
+      c.innerHTML = list.map(v => `
+      <div class="vc">
+        <div class="vt">🎞️<div class="vp">▶</div></div>
+        <div class="vi">
+          <div class="vn">${v.title || v.originalName || 'Video'}</div>
+          <div class="vs">${fmtBytes(v.size)} · ${ago(v.createdAt)}</div>
+        </div>
+      </div>`).join('');
+    }
+
+    // Load all projects
+    async function loadProjects() {
+      document.getElementById('all-projects').innerHTML = '<div class="loading"><div class="spin2"></div></div>';
+      const d = await apicall('/projects');
+      if (d && d.success) renderProjects(d.projects || [], 'all-projects', true);
+      else toast('Failed to load projects', 'err');
+    }
+
+    // Load all videos
+    async function loadVideos() {
+      document.getElementById('all-videos').innerHTML = '<div class="loading"><div class="spin2"></div></div>';
+      const d = await apicall('/videos');
+      if (d && d.success) renderVideos(d.videos || [], 'all-videos');
+      else toast('Failed to load videos', 'err');
+    }
+
+    // Load templates
+    async function loadTpls(cat) {
+      document.getElementById('all-tpls').innerHTML = '<div class="loading"><div class="spin2"></div></div>';
+      const q = cat !== 'all' ? '?category=' + cat : '';
+      const d = await apicall('/templates' + q);
+      const tClr = ['t1c', 't2c', 't3c', 't4c', 't5c', 't6c'];
+      const tIc = { vlog: '🌆', dance: '💃', travel: '🏔️', gaming: '🎮', fashion: '👗', food: '🍕', education: '🎓', music: '🎵', business: '💼', reels: '✨', other: '🎬' };
+      if (d && d.templates && d.templates.length) {
+        document.getElementById('all-tpls').innerHTML = d.templates.map((t, i) => `
+        <div class="tc" onclick="useTpl('${t._id}')">
+          <div class="tt ${tClr[i % 6]}">${tIc[t.category] || '🎬'}<span class="tl ${t.isPro ? 'pro' : 'free'}">${t.isPro ? 'PRO' : 'FREE'}</span></div>
+          <div class="ti"><div class="tn">${t.title}</div><div class="tu">${((t.uses || 0) / 1000000).toFixed(1)}M uses</div></div>
+        </div>`).join('');
+      } else {
+        document.getElementById('all-tpls').innerHTML = `
+        <div class="empty" style="grid-column:1/-1">
+          <div class="ei">🎨</div><div class="et">No templates</div>
+          <div class="es">Run seed: POST http://localhost:5000/api/templates/seed</div>
+        </div>`;
+      }
+    }
+
+    // Modal
+    function openModal() { document.getElementById('modal').classList.add('show'); document.getElementById('m-title').focus(); }
+    function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+    // Create project
+    async function createProject() {
+      const title = document.getElementById('m-title').value.trim() || 'Untitled Project';
+      const aspectRatio = document.getElementById('m-ratio').value;
+      const fps = parseInt(document.getElementById('m-fps').value);
+      const d = await apicall('/projects', { method: 'POST', body: JSON.stringify({ title, aspectRatio, fps }) });
+      if (d && d.success) {
+        closeModal();
+        toast('Project created! Opening editor...');
+        setTimeout(() => openProjectEditor(d.project._id), 700);
+      } else toast(d?.message || 'Failed to create project', 'err');
+    }
+
+    // Open editor
+    function openEditor() { window.location.href = APP_BASE + '/editor'; }
+    function openProjectEditor(id) {
+      localStorage.setItem('cm_project', id);
+      window.location.href = APP_BASE + '/editor';
+    }
+
+    // Delete project
+    async function delProject(id, btn) {
+      if (!confirm('Delete this project?')) return;
+      const d = await apicall('/projects/' + id, { method: 'DELETE' });
+      if (d && d.success) { toast('Project deleted'); btn.closest('.pc').remove(); }
+      else toast(d?.message || 'Failed to delete', 'err');
+    }
+
+    // Duplicate project
+    async function dupProject(id) {
+      const d = await apicall('/projects/' + id + '/duplicate', { method: 'POST' });
+      if (d && d.success) { toast('Project duplicated!'); loadProjects(); }
+      else toast(d?.message || 'Failed to duplicate', 'err');
+    }
+
+    // Upload video
+    async function uploadVideo(input) {
+      const file = input.files[0]; if (!file) return;
+      const bar = document.getElementById('up-bar');
+      const pf = document.getElementById('pf');
+      const pt2 = document.getElementById('pt2');
+      bar.style.display = 'block'; pf.style.width = '40%'; pt2.textContent = 'Uploading ' + file.name + '...';
+      const fd = new FormData();
+      fd.append('video', file);
+      fd.append('title', file.name.replace(/\.[^/.]+$/, ''));
+      try {
+        const r = await fetch(API + '/videos/upload', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token() },
+          body: fd
+        });
+        const d = await r.json();
+        pf.style.width = '100%';
+        if (d.success) {
+          pt2.textContent = '✓ Uploaded successfully!';
+          toast('Video uploaded!');
+          setTimeout(() => { bar.style.display = 'none'; pf.style.width = '0%'; loadVideos(); }, 1500);
+        } else {
+          pt2.textContent = '✕ ' + (d.message || 'Upload failed');
+          toast(d.message || 'Upload failed', 'err');
+        }
+      } catch (e) { pt2.textContent = '✕ Upload failed'; toast('Upload error', 'err'); }
+      input.value = '';
+    }
+
+    // Use template
+    async function useTpl(id) {
+      const d = await apicall('/templates/' + id);
+      if (d && d.success && d.template) {
+        const p = await apicall('/projects', { method: 'POST', body: JSON.stringify({ title: d.template.title + ' (Template)', aspectRatio: d.template.aspectRatio || '9:16', template: id }) });
+        if (p && p.success) { toast('Template applied!'); openProjectEditor(p.project._id); }
+      } else if (d && d.upgradeRequired) {
+        toast('Pro plan required for this template', 'err');
+        show('upgrade');
+      } else toast(d?.message || 'Failed', 'err');
+    }
+
+    // Upgrade plan
+    async function upgrade(plan) {
+      const d = await apicall('/auth/upgrade', { method: 'POST', body: JSON.stringify({ plan }) });
+      if (d && d.success) {
+        toast('Upgraded to ' + plan.toUpperCase() + '! 🎉');
+        const u = user(); u.plan = plan; localStorage.setItem('cm_user', JSON.stringify(u));
+        document.getElementById('up').textContent = plan.toUpperCase() + ' Plan';
+      } else toast(d?.message || 'Upgrade failed', 'err');
+    }
+
+    // Load settings
+    function loadSettings() {
+      const u = user();
+      document.getElementById('s-name').value = u.name || '';
+      document.getElementById('s-email').value = u.email || '';
+      document.getElementById('s-avatar').value = u.avatar || '';
+    }
+
+    // Save settings
+    async function saveSettings() {
+      const name = document.getElementById('s-name').value.trim();
+      const avatar = document.getElementById('s-avatar').value.trim();
+      const d = await apicall('/auth/update-profile', { method: 'PUT', body: JSON.stringify({ name, avatar }) });
+      if (d && d.success) {
+        toast('Profile updated!');
+        const u = user(); u.name = name; u.avatar = avatar; localStorage.setItem('cm_user', JSON.stringify(u));
+        document.getElementById('un').textContent = name;
+        document.getElementById('ua').textContent = name[0].toUpperCase();
+      } else toast(d?.message || 'Update failed', 'err');
+    }
+
+    // Change password
+    async function changePw() {
+      const cp = document.getElementById('s-cp').value;
+      const np = document.getElementById('s-np').value;
+      if (!cp || !np) return toast('Fill both fields', 'err');
+      const d = await apicall('/auth/change-password', { method: 'PUT', body: JSON.stringify({ currentPassword: cp, newPassword: np }) });
+      if (d && d.success) { toast('Password changed!'); document.getElementById('s-cp').value = ''; document.getElementById('s-np').value = ''; }
+      else toast(d?.message || 'Failed', 'err');
+    }
+
+    // Drag & drop upload
+    const uz = document.getElementById('uz');
+    uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('drag'); });
+    uz.addEventListener('dragleave', () => uz.classList.remove('drag'));
+    uz.addEventListener('drop', e => {
+      e.preventDefault(); uz.classList.remove('drag');
+      const f = e.dataTransfer.files[0];
+      if (f && f.type.startsWith('video/')) {
+        const dt = new DataTransfer(); dt.items.add(f);
+        document.getElementById('fi').files = dt.files;
+        uploadVideo(document.getElementById('fi'));
+      }
+    });
+
+    // Seed templates button in empty state
+    window.seedTemplates = async () => {
+      const d = await apicall('/templates/seed', { method: 'POST' });
+      if (d && d.success) { toast(d.message); loadTpls('all'); }
+      else toast('Seed failed', 'err');
+    };
+
+    // Init
+    loadDashboard();
+  </script>
+</body>
+
+</html>

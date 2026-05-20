@@ -1,0 +1,12 @@
+
+> cutmaster-pro@1.0.0 start
+> npm --prefix backend start
+
+
+> cutmaster-pro-backend@1.0.0 start
+> node server.js
+
+✅ MongoDB Connected
+🚀 CutMaster Pro Server running on http://localhost:5000
+📺 Frontend: http://localhost:5000
+🔌 API: http://localhost:5000/api

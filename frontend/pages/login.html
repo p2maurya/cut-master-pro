@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CutMaster Pro — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080810;
+      --card: #13132a;
+      --accent: #ff3e6c;
+      --accent2: #6c3eff;
+      --accent3: #00e5ff;
+      --text: #f0f0ff;
+      --text2: #a0a0c0;
+      --text3: #505070;
+      --border: rgba(255, 255, 255, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .orb1 {
+      width: 500px;
+      height: 500px;
+      background: var(--accent2);
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb2 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent);
+      bottom: -100px;
+      right: -100px;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      padding: 1.5rem;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      display: block;
+    }
+
+    .logo-sub {
+      font-size: 0.85rem;
+      color: var(--text3);
+      margin-top: 0.3rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+    }
+
+    .tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 0.3rem;
+      margin-bottom: 2rem;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 0.7rem;
+      border: none;
+      background: none;
+      color: var(--text3);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+
+    .fg {
+      margin-bottom: 1.2rem;
+    }
+
+    .fg label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .fg input {
+      width: 100%;
+      padding: 0.9rem 1.1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .fg input:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(108, 62, 255, 0.15);
+    }
+
+    .fg input::placeholder {
+      color: var(--text3);
+    }
+
+    .pw-wrap {
+      position: relative;
+    }
+
+    .pw-wrap input {
+      padding-right: 3rem;
+    }
+
+    .eye {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text3);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.3rem;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+
+    .btn-main:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 62, 108, 0.3);
+    }
+
+    .btn-main:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .alert {
+      padding: 0.9rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+      display: none;
+      text-align: center;
+    }
+
+    .alert.err {
+      display: block;
+      background: rgba(255, 62, 108, 0.12);
+      border: 1px solid rgba(255, 62, 108, 0.35);
+      color: #ff8fa3;
+    }
+
+    .alert.ok {
+      display: block;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: var(--accent3);
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: var(--text3);
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .note a {
+      color: var(--accent2);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .spin {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: sp 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes sp {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .sbar {
+      display: flex;
+      gap: 3px;
+      margin-top: 6px;
+    }
+
+    .ss {
+      height: 3px;
+      flex: 1;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: background 0.3s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <div class="wrap">
+    <div class="logo">
+      <a class="logo-text" href="/">CutMaster Pro</a>
+      <div class="logo-sub">Edit Like a Director 🎬</div>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" id="t1" onclick="sw('login')">Sign In</button>
+        <button class="tab" id="t2" onclick="sw('reg')">Create Account</button>
+      </div>
+
+      <div id="msg" class="alert"></div>
+
+      <!-- LOGIN FORM -->
+      <div id="lf">
+        <div class="fg">
+          <label>Email</label>
+          <input type="email" id="le" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="fg">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="lp" placeholder="Your password" autocomplete="current-password">
+            <button class="eye" onclick="tp('lp',this)" type="button">👁️</button>
+          </div>
+        </div>
+        <button class="btn btn-main" id="lb" onclick="login()">Sign In →</button>
+        <p class="note">No account? <a onclick="sw('reg')">Create one free →</a></p>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="rf" style="display:none">
+        <div class="fg">
+          <label>Full Name</label>
+          <input type="text" id="rn" placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="fg">
+          <label>Email</label>
+          <input type="email" id="re" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="fg">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="rp" placeholder="Min 6 characters" autocomplete="new-password"
+              oninput="ps(this.value)">
+            <button class="eye" onclick="tp('rp',this)" type="button">👁️</button>
+          </div>
+          <div class="sbar">
+            <div class="ss" id="s1"></div>
+            <div class="ss" id="s2"></div>
+            <div class="ss" id="s3"></div>
+            <div class="ss" id="s4"></div>
+          </div>
+        </div>
+        <button class="btn btn-main" id="rb" onclick="register()">Create Free Account →</button>
+        <p class="note">Already have an account? <a onclick="sw('login')">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const APP_BASE = window.location.protocol === 'http:' || window.location.protocol === 'https:'
+      ? window.location.origin
+      : 'http://localhost:5000';
+    const API = APP_BASE + '/api';
+
+    // Already logged in? Go to dashboard
+    if (localStorage.getItem('cm_token')) window.location.href = APP_BASE + '/dashboard';
+
+    function sw(tab) {
+      document.getElementById('t1').classList.toggle('active', tab === 'login');
+      document.getElementById('t2').classList.toggle('active', tab === 'reg');
+      document.getElementById('lf').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('rf').style.display = tab === 'reg' ? 'block' : 'none';
+      document.getElementById('msg').className = 'alert';
+      document.getElementById('msg').textContent = '';
+    }
+
+    function msg(text, type) {
+      const el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'alert ' + type;
+    }
+
+    function tp(id, btn) {
+      const el = document.getElementById(id);
+      el.type = el.type === 'password' ? 'text' : 'password';
+      btn.textContent = el.type === 'password' ? '👁️' : '🙈';
+    }
+
+    function ps(v) {
+      const s = [/[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/, /.{8,}/].filter(r => r.test(v)).length;
+      const c = ['#ff3e6c', '#ff8c00', '#ffd700', '#00e5ff'];
+      ['s1', 's2', 's3', 's4'].forEach((id, i) => {
+        document.getElementById(id).style.background = i < s ? c[s - 1] : 'rgba(255,255,255,0.08)';
+      });
+    }
+
+    function setBusy(id, busy, txt) {
+      const b = document.getElementById(id);
+      b.disabled = busy;
+      b.innerHTML = busy ? '<span class="spin"></span>' + txt : txt;
+    }
+
+    async function login() {
+      const email = document.getElementById('le').value.trim();
+      const pw = document.getElementById('lp').value;
+      if (!email || !pw) return msg('Please fill all fields', 'err');
+      setBusy('lb', true, 'Signing in...');
+      try {
+        const r = await fetch(API + '/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password: pw })
+        });
+        const d = await r.json();
+        if (d.success) {
+          localStorage.setItem('cm_token', d.token);
+          localStorage.setItem('cm_user', JSON.stringify(d.user));
+          msg('Login successful! Redirecting... 🎬', 'ok');
+          setTimeout(() => window.location.href = APP_BASE + '/dashboard', 900);
+        } else {
+          msg(d.message || 'Invalid email or password', 'err');
+          setBusy('lb', false, 'Sign In →');
+        }
+      } catch (e) {
+        msg('Cannot connect to server. Make sure server is running!', 'err');
+        setBusy('lb', false, 'Sign In →');
+      }
+    }
+
+    async function register() {
+      const name = document.getElementById('rn').value.trim();
+      const email = document.getElementById('re').value.trim();
+      const pw = document.getElementById('rp').value;
+      if (!name || !email || !pw) return msg('Please fill all fields', 'err');
+      if (pw.length < 6) return msg('Password must be at least 6 characters', 'err');
+      setBusy('rb', true, 'Creating account...');
+      try {
+        const r = await fetch(API + '/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password: pw })
+        });
+        const d = await r.json();
+        if (d.success) {
+          localStorage.setItem('cm_token', d.token);
+          localStorage.setItem('cm_user', JSON.stringify(d.user));
+          msg('Account created! Welcome to CutMaster Pro 🎬', 'ok');
+          setTimeout(() => window.location.href = APP_BASE + '/dashboard', 900);
+        } else {
+          msg(d.message || 'Registration failed', 'err');
+          setBusy('rb', false, 'Create Free Account →');
+        }
+      } catch (e) {
+        msg('Cannot connect to server. Make sure server is running!', 'err');
+        setBusy('rb', false, 'Create Free Account →');
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      if (document.getElementById('lf').style.display !== 'none') login();
+      else register();
+    });
+  </script>
+</body>
+
+</html>
