@@ -1,1 +1,9 @@
 notepad .gitignore
+node_modules/
+.env
+dist/
+build/
+uploads/
+.cache/
+coverage/
+*.log

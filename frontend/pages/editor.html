@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editor â€” CutMaster Pro</title>
+  <title>Editor - CutMaster Pro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
@@ -529,6 +529,86 @@
       border-color: var(--accent3);
     }
 
+    .audio-item.on,
+    .ts-item.on {
+      border-color: var(--accent3);
+      box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.28);
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .mini-btn {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--text2);
+      border-radius: 8px;
+      padding: 0.55rem;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .mini-btn:hover,
+    .mini-btn.on {
+      border-color: var(--accent3);
+      color: var(--text);
+    }
+
+    .text-preview-box {
+      min-height: 74px;
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.65rem;
+      margin-bottom: 0.7rem;
+      background: linear-gradient(135deg, rgba(108, 62, 255, 0.14), rgba(255, 62, 108, 0.12));
+      color: #fff;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .selected-pill {
+      border: 1px solid rgba(0, 229, 255, 0.24);
+      background: rgba(0, 229, 255, 0.08);
+      color: var(--accent3);
+      border-radius: 999px;
+      padding: 0.4rem 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      margin-bottom: 0.65rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .color-row {
+      display: flex;
+      gap: 0.45rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .color-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.18);
+      cursor: pointer;
+    }
+
+    .color-dot.on {
+      border-color: var(--accent3);
+      box-shadow: 0 0 0 2px rgba(0,229,255,0.18);
+    }
+
     /* PREVIEW */
     .preview {
       background: #000;
@@ -612,8 +692,22 @@
       animation: fxShake 0.16s infinite;
     }
 
+    .fx-zoom .preview-media {
+      animation: fxZoom 1.1s ease-in-out infinite alternate;
+    }
+
+    .fx-glitch .preview-media {
+      animation: fxGlitch 0.28s steps(2, end) infinite;
+    }
+
+    .fx-neon .preview-media {
+      box-shadow: 0 0 26px rgba(0, 229, 255, 0.35), 0 0 42px rgba(255, 43, 214, 0.22);
+    }
+
     .fx-flash::after,
-    .fx-rgb::after {
+    .fx-rgb::after,
+    .fx-film::after,
+    .fx-transition::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -631,6 +725,40 @@
       background: linear-gradient(90deg, rgba(255, 0, 80, 0.18), rgba(0, 229, 255, 0.18));
     }
 
+    .fx-film::after {
+      opacity: 0.22;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.35) 0 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.06), rgba(0,0,0,0.06));
+      background-size: 7px 7px, 100% 3px;
+      animation: fxGrain 0.2s steps(2, end) infinite;
+    }
+
+    .fx-transition::after {
+      background: #000;
+      animation: fxFade 0.55s ease-out forwards;
+    }
+
+    .tr-slide-left .preview-media {
+      animation: trSlideLeft 0.55s ease-out;
+    }
+
+    .tr-slide-right .preview-media {
+      animation: trSlideRight 0.55s ease-out;
+    }
+
+    .tr-zoom-in .preview-media {
+      animation: trZoomIn 0.55s ease-out;
+    }
+
+    .tr-zoom-out .preview-media {
+      animation: trZoomOut 0.55s ease-out;
+    }
+
+    .tr-spin .preview-media {
+      animation: trSpin 0.55s ease-out;
+    }
+
     @keyframes fxShake {
       0%, 100% { translate: 0 0; }
       50% { translate: 2px -2px; }
@@ -639,6 +767,52 @@
     @keyframes fxFlash {
       0%, 70%, 100% { opacity: 0; }
       72%, 82% { opacity: 1; }
+    }
+
+    @keyframes fxZoom {
+      from { scale: 1; }
+      to { scale: 1.08; }
+    }
+
+    @keyframes fxGlitch {
+      0%, 100% { translate: 0 0; filter: hue-rotate(0deg); }
+      33% { translate: -3px 1px; filter: hue-rotate(35deg); }
+      66% { translate: 3px -1px; filter: hue-rotate(-35deg); }
+    }
+
+    @keyframes fxGrain {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-4px, 3px); }
+    }
+
+    @keyframes fxFade {
+      from { opacity: 0.9; }
+      to { opacity: 0; }
+    }
+
+    @keyframes trSlideLeft {
+      from { translate: 35% 0; opacity: 0.35; }
+      to { translate: 0 0; opacity: 1; }
+    }
+
+    @keyframes trSlideRight {
+      from { translate: -35% 0; opacity: 0.35; }
+      to { translate: 0 0; opacity: 1; }
+    }
+
+    @keyframes trZoomIn {
+      from { scale: 0.72; opacity: 0.35; }
+      to { scale: 1; opacity: 1; }
+    }
+
+    @keyframes trZoomOut {
+      from { scale: 1.35; opacity: 0.35; }
+      to { scale: 1; opacity: 1; }
+    }
+
+    @keyframes trSpin {
+      from { rotate: -10deg; scale: 0.92; opacity: 0.45; }
+      to { rotate: 0deg; scale: 1; opacity: 1; }
     }
 
     .caption-overlay {
@@ -660,9 +834,10 @@
 
     .text-overlay {
       position: absolute;
-      left: 10%;
-      right: 10%;
-      top: 14%;
+      left: 50%;
+      top: 18%;
+      max-width: 82%;
+      transform: translate(-50%, -50%);
       z-index: 6;
       color: #fff;
       font-size: 1rem;
@@ -670,7 +845,15 @@
       text-align: center;
       line-height: 1.2;
       text-shadow: 0 2px 8px #000;
-      pointer-events: none;
+      cursor: grab;
+      pointer-events: auto;
+      user-select: none;
+      touch-action: none;
+      overflow-wrap: anywhere;
+    }
+
+    .text-overlay:active {
+      cursor: grabbing;
     }
 
     .ai-watermark {
@@ -774,11 +957,11 @@
     }
 
     .cb.play {
-      width: 30px;
+      min-width: 52px;
       height: 30px;
       background: var(--accent);
       color: #fff;
-      border-radius: 50%;
+      border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1079,7 +1262,7 @@
       top: 3px;
       height: calc(var(--th) - 6px);
       border-radius: 5px;
-      cursor: pointer;
+      cursor: grab;
       display: flex;
       align-items: center;
       padding: 0 0.5rem;
@@ -1088,6 +1271,12 @@
       overflow: hidden;
       transition: opacity 0.2s;
       white-space: nowrap;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .clip:active {
+      cursor: grabbing;
     }
 
     .clip:hover {
@@ -1097,6 +1286,34 @@
 
     .clip.selected {
       outline: 2px solid var(--accent3);
+    }
+
+    .clip::before,
+    .clip::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      width: 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.32);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .clip::before {
+      left: 3px;
+    }
+
+    .clip::after {
+      right: 3px;
+    }
+
+    .clip:hover::before,
+    .clip:hover::after,
+    .clip.selected::before,
+    .clip.selected::after {
+      opacity: 1;
     }
 
     .clip-v {
@@ -1126,7 +1343,7 @@
     }
 
     .playhead::before {
-      content: 'â–¼';
+      content: 'v';
       position: absolute;
       top: -13px;
       left: 50%;
@@ -1306,27 +1523,27 @@
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="tb-logo">CutMaster Pro</div>
-    <div class="tb-proj" id="tb-proj" onclick="renameProject()">ðŸ“ <span id="proj-name">Loading...</span></div>
+    <div class="tb-proj" id="tb-proj" onclick="renameProject()">Project: <span id="proj-name">Loading...</span></div>
     <div class="tb-tools">
-      <button class="tb-btn on" id="tool-cut" onclick="setTool('cut','tool-cut')">âœ‚ï¸ Cut</button>
-      <button class="tb-btn" id="tool-split" onclick="setTool('split','tool-split')">âš¡ Split</button>
-      <button class="tb-btn" id="tool-select" onclick="setTool('select','tool-select')">â†– Select</button>
+      <button class="tb-btn on" id="tool-cut" onclick="setTool('cut','tool-cut')">Cut</button>
+      <button class="tb-btn" id="tool-split" onclick="setTool('split','tool-split')">Split</button>
+      <button class="tb-btn" id="tool-select" onclick="setTool('select','tool-select')">Select</button>
       <div class="tb-sep"></div>
-      <button class="tb-btn" onclick="undo()">â†© Undo</button>
-      <button class="tb-btn" onclick="redo()">â†ª Redo</button>
+      <button class="tb-btn" onclick="undo()">Undo</button>
+      <button class="tb-btn" onclick="redo()">Redo</button>
       <div class="tb-sep"></div>
-      <button class="tb-btn" onclick="saveProject()">ðŸ’¾ Save</button>
-      <button class="tb-btn" onclick="window.location.href=(window.location.protocol === 'http:' || window.location.protocol === 'https:' ? window.location.origin : 'http://localhost:5000') + '/dashboard'">â† Dashboard</button>
+      <button class="tb-btn" onclick="saveProject()">Save</button>
+      <button class="tb-btn" onclick="window.location.href=(window.location.protocol === 'http:' || window.location.protocol === 'https:' ? window.location.origin : 'http://localhost:5000') + '/dashboard'">Dashboard</button>
     </div>
     <div class="tb-status">
       <span class="sdot"></span>
       <span id="save-status">Loading...</span>
-      <span>Â·</span>
+      <span>|</span>
       <span id="dur-display">00:00</span>
-      <span>Â·</span>
+      <span>|</span>
       <span id="ratio-display">9:16</span>
     </div>
-    <button class="exp-btn" onclick="openExport()">â¬† Export</button>
+    <button class="exp-btn" onclick="openExport()">Export</button>
   </div>
 
   <!-- EDITOR LAYOUT -->
@@ -1334,20 +1551,22 @@
 
     <!-- TOOL SIDEBAR -->
     <div class="tools">
-      <button class="tool on" id="tb-media" onclick="switchPanel('media',this)">ðŸ“<span
+      <button class="tool on" id="tb-media" onclick="switchPanel('media',this)">M<span
           class="tool-tip">Media</span></button>
-      <button class="tool" id="tb-text" onclick="switchPanel('text',this)">ðŸ”¤<span class="tool-tip">Text</span></button>
-      <button class="tool" id="tb-effects" onclick="switchPanel('effects',this)">âœ¨<span
+      <button class="tool" id="tb-bg" onclick="switchPanel('bg',this)">BG<span
+          class="tool-tip">Background</span></button>
+      <button class="tool" id="tb-text" onclick="switchPanel('text',this)">T<span class="tool-tip">Text</span></button>
+      <button class="tool" id="tb-effects" onclick="switchPanel('effects',this)">FX<span
           class="tool-tip">Effects</span></button>
-      <button class="tool" id="tb-transitions" onclick="switchPanel('transitions',this)">ðŸ”€<span
+      <button class="tool" id="tb-transitions" onclick="switchPanel('transitions',this)">TR<span
           class="tool-tip">Transitions</span></button>
-      <button class="tool" id="tb-stickers" onclick="switchPanel('stickers',this)">ðŸŽ­<span
+      <button class="tool" id="tb-stickers" onclick="switchPanel('stickers',this)">S<span
           class="tool-tip">Stickers</span></button>
-      <button class="tool" id="tb-audio" onclick="switchPanel('audio',this)">ðŸŽµ<span
+      <button class="tool" id="tb-audio" onclick="switchPanel('audio',this)">A<span
           class="tool-tip">Audio</span></button>
       <div class="tsep"></div>
-      <button class="tool" id="tb-ai" onclick="switchPanel('ai',this)">ðŸ¤–<span class="tool-tip">AI Tools</span></button>
-      <button class="tool" id="tb-tpl" onclick="switchPanel('tpl',this)">ðŸŽ¨<span
+      <button class="tool" id="tb-ai" onclick="switchPanel('ai',this)">AI<span class="tool-tip">AI Tools</span></button>
+      <button class="tool" id="tb-tpl" onclick="switchPanel('tpl',this)">TP<span
           class="tool-tip">Templates</span></button>
     </div>
 
@@ -1367,19 +1586,49 @@
           </div>
           <div class="plbl">Stock Footage</div>
           <div class="mg">
-            <div class="mi v16" onclick="addToTimeline('clip','ðŸŒ† City')" title="Add to timeline">ðŸŒ†<div class="mi-lbl">
+            <div class="mi v16" onclick="addToTimeline('clip','City')" title="Add to timeline">City<div class="mi-lbl">
                 +Add</div>
             </div>
-            <div class="mi v16" onclick="addToTimeline('clip','ðŸŒŠ Ocean')" title="Add to timeline">ðŸŒŠ<div
+            <div class="mi v16" onclick="addToTimeline('clip','Ocean')" title="Add to timeline">Ocean<div
                 class="mi-lbl">+Add</div>
             </div>
-            <div class="mi v169" onclick="addToTimeline('clip','ðŸŒƒ Night')" title="Add to timeline">ðŸŒƒ<div
+            <div class="mi v169" onclick="addToTimeline('clip','Night')" title="Add to timeline">Night<div
                 class="mi-lbl">+Add</div>
             </div>
-            <div class="mi v169" onclick="addToTimeline('clip','ðŸ”ï¸ Mountain')" title="Add to timeline">ðŸ”ï¸<div
+            <div class="mi v169" onclick="addToTimeline('clip','Mountain')" title="Add to timeline">Mountain<div
                 class="mi-lbl">+Add</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- BACKGROUND -->
+      <div id="p-bg" style="display:none;flex-direction:column;flex:1;overflow:hidden">
+        <div class="ptabs"><button class="ptab on">Background</button><button class="ptab">Music</button></div>
+        <div class="pcont">
+          <div class="plbl">Choose Background</div>
+          <div class="mini-row">
+            <button class="mini-btn" type="button" onclick="document.getElementById('bg-fi').click()">Gallery</button>
+            <button class="mini-btn" type="button" onclick="clearBackground()">Remove</button>
+          </div>
+          <input type="file" id="bg-fi" accept="image/*" style="display:none" onchange="handleBackgroundUpload(this)">
+          <div class="eg" style="margin-bottom:0.8rem">
+            <div class="ei" onclick="setBackground('gradient','linear-gradient(135deg,#16162e,#441641)')"><div class="eic">Pink</div></div>
+            <div class="ei" onclick="setBackground('gradient','linear-gradient(135deg,#081a2e,#0b4a4f)')"><div class="eic">Teal</div></div>
+            <div class="ei" onclick="setBackground('gradient','linear-gradient(135deg,#101014,#3b3020)')"><div class="eic">Warm</div></div>
+            <div class="ei" onclick="setBackground('color','#000000')"><div class="eic">Black</div></div>
+            <div class="ei" onclick="setBackground('color','#ffffff')"><div class="eic" style="color:#111">White</div></div>
+            <div class="ei" onclick="setBackground('color','#1a1a30')"><div class="eic">Dark</div></div>
+          </div>
+          <div class="plbl">Background Music</div>
+          <div class="selected-pill" id="selected-bg-audio">Select a music track below</div>
+          <div class="audio-item" onclick="selectAudio('Energetic Beat',this)">
+            <span style="font-size:1.2rem">A</span><div style="flex:1"><div style="font-size:0.78rem;font-weight:700">Energetic Beat</div><div style="font-size:0.65rem;color:var(--text3)">EDM | Free</div></div>
+          </div>
+          <div class="audio-item" onclick="selectAudio('Chill Lo-Fi',this)">
+            <span style="font-size:1.2rem">A</span><div style="flex:1"><div style="font-size:0.78rem;font-weight:700">Chill Lo-Fi</div><div style="font-size:0.65rem;color:var(--text3)">Lo-Fi | Free</div></div>
+          </div>
+          <button class="exp-full" style="padding:0.65rem;margin-top:0.4rem" onclick="addSelectedAudio()">Add Music</button>
         </div>
       </div>
 
@@ -1388,36 +1637,44 @@
         <div class="ptabs"><button class="ptab on">Text</button><button class="ptab">Titles</button></div>
         <div class="pcont">
           <div class="plbl">Write Text</div>
-          <div class="mfg" style="margin-bottom:0.75rem">
-            <input id="custom-text" type="text" placeholder="Type title / caption text" style="width:100%;padding:0.65rem;background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif">
+          <div class="mfg" style="display:grid;gap:0.5rem;margin-bottom:0.75rem">
+            <textarea id="custom-text" rows="3" placeholder="Type your text here" oninput="updateTextDraft()" style="width:100%;resize:vertical;padding:0.65rem;background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif"></textarea>
+            <div class="text-preview-box" id="text-draft-preview">Your text preview</div>
+            <div class="mini-row">
+              <button class="mini-btn on" type="button" onclick="setTextStyle('basic',this)">Basic</button>
+              <button class="mini-btn" type="button" onclick="setTextStyle('title',this)">Title</button>
+              <button class="mini-btn" type="button" onclick="setTextStyle('caption',this)">Caption</button>
+              <button class="mini-btn" type="button" onclick="setTextStyle('neon',this)">Neon</button>
+            </div>
+            <div class="color-row">
+              <button class="color-dot on" type="button" title="White" style="background:#ffffff" onclick="setTextColor('#ffffff',this)"></button>
+              <button class="color-dot" type="button" title="Pink" style="background:#ff3e6c" onclick="setTextColor('#ff3e6c',this)"></button>
+              <button class="color-dot" type="button" title="Blue" style="background:#00e5ff" onclick="setTextColor('#00e5ff',this)"></button>
+              <button class="color-dot" type="button" title="Yellow" style="background:#ffd700" onclick="setTextColor('#ffd700',this)"></button>
+              <button class="color-dot" type="button" title="Black" style="background:#111111" onclick="setTextColor('#111111',this)"></button>
+            </div>
           </div>
           <button class="exp-full" style="padding:0.65rem;margin:0 0 0.8rem" onclick="addCustomText()">Add Text</button>
           <div class="plbl">Captions</div>
           <div class="mfg" style="display:grid;gap:0.45rem;margin-bottom:0.8rem">
             <textarea id="caption-text" rows="4" placeholder="Generate captions from title or type your own subtitles" style="width:100%;resize:vertical;padding:0.65rem;background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif"></textarea>
-            <select id="caption-lang" style="width:100%;padding:0.55rem;background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif">
-              <option value="en">English</option>
-              <option value="hi">Hindi</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-            </select>
             <div class="flip-btns">
               <button class="flip-btn" type="button" onclick="generateCaptions()">Generate</button>
-              <button class="flip-btn" type="button" onclick="translateCaptions()">Translate</button>
+              <button class="flip-btn" type="button" onclick="applyCaptions()">Apply Captions</button>
             </div>
           </div>
           <div class="plbl">Add Text Style</div>
           <div class="ts-list">
-            <div class="ts-item" onclick="addCustomText('Basic Text')" style="font-family:'Outfit'">Basic Text</div>
-            <div class="ts-item" onclick="addCustomText('BIG TITLE')"
+            <div class="ts-item" onclick="useTextPreset('Basic Text','basic',this)" style="font-family:'Outfit'">Basic Text</div>
+            <div class="ts-item" onclick="useTextPreset('BIG TITLE','title',this)"
               style="font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:1rem">BIG TITLE</div>
-            <div class="ts-item" onclick="addCustomText('Subtitle / Caption')" style="font-size:0.7rem;color:var(--text3)">
+            <div class="ts-item" onclick="useTextPreset('Subtitle / Caption','caption',this)" style="font-size:0.7rem;color:var(--text3)">
               Subtitle / Caption</div>
-            <div class="ts-item" onclick="addCustomText('Neon Text')"
+            <div class="ts-item" onclick="useTextPreset('Neon Text','neon',this)"
               style="color:var(--accent3);text-shadow:0 0 8px var(--accent3)">Neon Glow</div>
-            <div class="ts-item" onclick="addCustomText('Outline Text')"
+            <div class="ts-item" onclick="useTextPreset('Outline Text','outline',this)"
               style="-webkit-text-stroke:1px var(--accent);color:transparent">Outline Style</div>
-            <div class="ts-item" onclick="addCustomText('Gradient Text')"
+            <div class="ts-item" onclick="useTextPreset('Gradient Text','gradient',this)"
               style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent">
               Gradient Text</div>
           </div>
@@ -1431,39 +1688,39 @@
           <div class="plbl">Video Effects</div>
           <div class="eg">
             <div class="ei" onclick="applyFX('Glitch')">
-              <div class="eic">âš¡</div>
+              <div class="eic">GL</div>
               <div class="en">Glitch</div>
             </div>
             <div class="ei" onclick="applyFX('Blur')">
-              <div class="eic">ðŸ’«</div>
+              <div class="eic">BL</div>
               <div class="en">Blur</div>
             </div>
             <div class="ei" onclick="applyFX('Zoom')">
-              <div class="eic">ðŸ”</div>
+              <div class="eic">ZM</div>
               <div class="en">Zoom</div>
             </div>
             <div class="ei" onclick="applyFX('Shake')">
-              <div class="eic">ðŸ“³</div>
+              <div class="eic">SH</div>
               <div class="en">Shake</div>
             </div>
             <div class="ei" onclick="applyFX('Flash')">
-              <div class="eic">ðŸ’¡</div>
+              <div class="eic">FL</div>
               <div class="en">Flash</div>
             </div>
             <div class="ei" onclick="applyFX('RGB Split')">
-              <div class="eic">ðŸŒˆ</div>
+              <div class="eic">RGB</div>
               <div class="en">RGB</div>
             </div>
             <div class="ei" onclick="applyFX('VHS')">
-              <div class="eic">ðŸ“¼</div>
+              <div class="eic">VHS</div>
               <div class="en">VHS</div>
             </div>
             <div class="ei" onclick="applyFX('Film Grain')">
-              <div class="eic">ðŸŽžï¸</div>
+              <div class="eic">FILM</div>
               <div class="en">Film</div>
             </div>
             <div class="ei" onclick="applyFX('Neon')">
-              <div class="eic">âœ¨</div>
+              <div class="eic">NEON</div>
               <div class="en">Neon</div>
             </div>
           </div>
@@ -1495,19 +1752,19 @@
         <div class="ptabs"><button class="ptab on">Transitions</button></div>
         <div class="pcont">
           <div class="plbl">Basic</div>
-          <div class="tr-item" onclick="addTransition('Cut')">âœ‚ï¸ <span>Cut (Hard)</span></div>
-          <div class="tr-item" onclick="addTransition('Fade')">ðŸŒ… <span>Fade to Black</span></div>
-          <div class="tr-item" onclick="addTransition('Dissolve')">ðŸ’§ <span>Cross Dissolve</span></div>
+          <div class="tr-item" onclick="addTransition('Cut')"><span>Cut (Hard)</span></div>
+          <div class="tr-item" onclick="addTransition('Fade')"><span>Fade to Black</span></div>
+          <div class="tr-item" onclick="addTransition('Dissolve')"><span>Cross Dissolve</span></div>
           <div class="plbl">Dynamic</div>
-          <div class="tr-item" onclick="addTransition('Whip Pan')">ðŸ’¨ <span>Whip Pan</span></div>
-          <div class="tr-item" onclick="addTransition('Zoom In')">ðŸ” <span>Zoom In</span></div>
-          <div class="tr-item" onclick="addTransition('Zoom Out')">ðŸ”Ž <span>Zoom Out</span></div>
-          <div class="tr-item" onclick="addTransition('Spin')">ðŸŒ€ <span>Spin</span></div>
-          <div class="tr-item" onclick="addTransition('Glitch')">âš¡ <span>Glitch</span></div>
-          <div class="tr-item" onclick="addTransition('Slide Left')">â—€ <span>Slide Left</span></div>
-          <div class="tr-item" onclick="addTransition('Slide Right')">â–¶ <span>Slide Right</span></div>
-          <div class="tr-item" onclick="addTransition('Film Burn')">ðŸ”¥ <span>Film Burn</span></div>
-          <div class="tr-item" onclick="addTransition('Luma Fade')">ðŸŒŸ <span>Luma Fade</span></div>
+          <div class="tr-item" onclick="addTransition('Whip Pan')"><span>Whip Pan</span></div>
+          <div class="tr-item" onclick="addTransition('Zoom In')"><span>Zoom In</span></div>
+          <div class="tr-item" onclick="addTransition('Zoom Out')"><span>Zoom Out</span></div>
+          <div class="tr-item" onclick="addTransition('Spin')"><span>Spin</span></div>
+          <div class="tr-item" onclick="addTransition('Glitch')"><span>Glitch</span></div>
+          <div class="tr-item" onclick="addTransition('Slide Left')"><span>Slide Left</span></div>
+          <div class="tr-item" onclick="addTransition('Slide Right')"><span>Slide Right</span></div>
+          <div class="tr-item" onclick="addTransition('Film Burn')"><span>Film Burn</span></div>
+          <div class="tr-item" onclick="addTransition('Luma Fade')"><span>Luma Fade</span></div>
         </div>
       </div>
 
@@ -1517,41 +1774,41 @@
         <div class="pcont">
           <div class="plbl">Trending</div>
           <div class="eg">
-            <div class="ei" onclick="addSticker('â¤ï¸')">
-              <div class="eic">â¤ï¸</div>
+            <div class="ei" onclick="addSticker('Love')">
+              <div class="eic">LOVE</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸ”¥')">
-              <div class="eic">ðŸ”¥</div>
+            <div class="ei" onclick="addSticker('Fire')">
+              <div class="eic">FIRE</div>
             </div>
-            <div class="ei" onclick="addSticker('âœ¨')">
-              <div class="eic">âœ¨</div>
+            <div class="ei" onclick="addSticker('Spark')">
+              <div class="eic">SPARK</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸ’«')">
-              <div class="eic">ðŸ’«</div>
+            <div class="ei" onclick="addSticker('Glow')">
+              <div class="eic">GLOW</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸŒŸ')">
-              <div class="eic">ðŸŒŸ</div>
+            <div class="ei" onclick="addSticker('Star')">
+              <div class="eic">STAR</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸŽ‰')">
-              <div class="eic">ðŸŽ‰</div>
+            <div class="ei" onclick="addSticker('Party')">
+              <div class="eic">PARTY</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸ‘†')">
-              <div class="eic">ðŸ‘†</div>
+            <div class="ei" onclick="addSticker('Point Up')">
+              <div class="eic">UP</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸ˜')">
-              <div class="eic">ðŸ˜</div>
+            <div class="ei" onclick="addSticker('Like')">
+              <div class="eic">LIKE</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸ’¬')">
-              <div class="eic">ðŸ’¬</div>
+            <div class="ei" onclick="addSticker('Comment')">
+              <div class="eic">CHAT</div>
             </div>
-            <div class="ei" onclick="addSticker('â­')">
-              <div class="eic">â­</div>
+            <div class="ei" onclick="addSticker('Featured')">
+              <div class="eic">BEST</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸŽµ')">
-              <div class="eic">ðŸŽµ</div>
+            <div class="ei" onclick="addSticker('Music')">
+              <div class="eic">MUSIC</div>
             </div>
-            <div class="ei" onclick="addSticker('ðŸ’¥')">
-              <div class="eic">ðŸ’¥</div>
+            <div class="ei" onclick="addSticker('Impact')">
+              <div class="eic">BOOM</div>
             </div>
           </div>
         </div>
@@ -1561,36 +1818,43 @@
       <div id="p-audio" style="display:none;flex-direction:column;flex:1;overflow:hidden">
         <div class="ptabs"><button class="ptab on">Music</button><button class="ptab">SFX</button></div>
         <div class="pcont">
+          <div class="plbl">Add Your Audio</div>
+          <div class="mini-row">
+            <button class="mini-btn" type="button" onclick="document.getElementById('audio-fi').click()">Upload Audio</button>
+            <button class="mini-btn" type="button" onclick="addSelectedAudio()">Add Selected</button>
+          </div>
+          <input type="file" id="audio-fi" accept="audio/*" style="display:none" onchange="handleAudioUpload(this)">
+          <div class="selected-pill" id="selected-audio">Selected: none</div>
           <div class="plbl">Royalty Free Tracks</div>
-          <div class="audio-item" onclick="addAudio('ðŸŽµ Energetic Beat')"><span style="font-size:1.2rem">ðŸŽµ</span>
+          <div class="audio-item" onclick="selectAudio('Energetic Beat',this)"><span style="font-size:1.2rem">A</span>
             <div style="flex:1">
               <div style="font-size:0.78rem;font-weight:700">Energetic Beat</div>
-              <div style="font-size:0.65rem;color:var(--text3)">2:34 Â· EDM Â· Free</div>
-            </div><span style="color:var(--accent3);font-size:0.72rem">+Add</span>
+              <div style="font-size:0.65rem;color:var(--text3)">2:34 | EDM | Free</div>
+            </div><span style="color:var(--accent3);font-size:0.72rem">Choose</span>
           </div>
-          <div class="audio-item" onclick="addAudio('ðŸŽ¹ Chill Lo-Fi')"><span style="font-size:1.2rem">ðŸŽ¹</span>
+          <div class="audio-item" onclick="selectAudio('Chill Lo-Fi',this)"><span style="font-size:1.2rem">A</span>
             <div style="flex:1">
               <div style="font-size:0.78rem;font-weight:700">Chill Lo-Fi</div>
-              <div style="font-size:0.65rem;color:var(--text3)">3:12 Â· Lo-Fi Â· Free</div>
-            </div><span style="color:var(--accent3);font-size:0.72rem">+Add</span>
+              <div style="font-size:0.65rem;color:var(--text3)">3:12 | Lo-Fi | Free</div>
+            </div><span style="color:var(--accent3);font-size:0.72rem">Choose</span>
           </div>
-          <div class="audio-item" onclick="addAudio('ðŸŽ» Epic Cinematic')"><span style="font-size:1.2rem">ðŸŽ»</span>
+          <div class="audio-item" onclick="selectAudio('Epic Cinematic',this)"><span style="font-size:1.2rem">A</span>
             <div style="flex:1">
               <div style="font-size:0.78rem;font-weight:700">Epic Cinematic</div>
-              <div style="font-size:0.65rem;color:var(--text3)">4:01 Â· Orchestral Â· Pro</div>
-            </div><span style="color:var(--accent3);font-size:0.72rem">+Add</span>
+              <div style="font-size:0.65rem;color:var(--text3)">4:01 | Orchestral | Pro</div>
+            </div><span style="color:var(--accent3);font-size:0.72rem">Choose</span>
           </div>
-          <div class="audio-item" onclick="addAudio('ðŸ¥ Hip Hop Beat')"><span style="font-size:1.2rem">ðŸ¥</span>
+          <div class="audio-item" onclick="selectAudio('Hip Hop Beat',this)"><span style="font-size:1.2rem">A</span>
             <div style="flex:1">
               <div style="font-size:0.78rem;font-weight:700">Hip Hop Beat</div>
-              <div style="font-size:0.65rem;color:var(--text3)">2:48 Â· Hip Hop Â· Free</div>
-            </div><span style="color:var(--accent3);font-size:0.72rem">+Add</span>
+              <div style="font-size:0.65rem;color:var(--text3)">2:48 | Hip Hop | Free</div>
+            </div><span style="color:var(--accent3);font-size:0.72rem">Choose</span>
           </div>
-          <div class="audio-item" onclick="addAudio('ðŸŽ¸ Rock Anthem')"><span style="font-size:1.2rem">ðŸŽ¸</span>
+          <div class="audio-item" onclick="selectAudio('Rock Anthem',this)"><span style="font-size:1.2rem">A</span>
             <div style="flex:1">
               <div style="font-size:0.78rem;font-weight:700">Rock Anthem</div>
-              <div style="font-size:0.65rem;color:var(--text3)">3:45 Â· Rock Â· Pro</div>
-            </div><span style="color:var(--accent3);font-size:0.72rem">+Add</span>
+              <div style="font-size:0.65rem;color:var(--text3)">3:45 | Rock | Pro</div>
+            </div><span style="color:var(--accent3);font-size:0.72rem">Choose</span>
           </div>
         </div>
       </div>
@@ -1599,49 +1863,49 @@
       <div id="p-ai" style="display:none;flex-direction:column;flex:1;overflow:hidden">
         <div class="ptabs"><button class="ptab on">AI Tools</button></div>
         <div class="pcont">
-          <div class="ai-item" onclick="runAI('auto-captions')"><span class="ai-ic">ðŸŽ™ï¸</span>
+          <div class="ai-item" onclick="runAI('auto-captions')"><span class="ai-ic">CC</span>
             <div>
               <div class="ai-t">Auto Captions</div>
-              <div class="ai-s">AI speech â†’ subtitles in 50+ langs</div>
+              <div class="ai-s">AI speech to subtitles</div>
             </div>
           </div>
-          <div class="ai-item" onclick="runAI('remove-bg')"><span class="ai-ic">ðŸ§ </span>
+          <div class="ai-item" onclick="runAI('remove-bg')"><span class="ai-ic">BG</span>
             <div>
               <div class="ai-t">Remove Background</div>
               <div class="ai-s">AI video background removal</div>
             </div>
           </div>
-          <div class="ai-item" onclick="runAI('beat-sync')"><span class="ai-ic">ðŸŽµ</span>
+          <div class="ai-item" onclick="runAI('beat-sync')"><span class="ai-ic">BT</span>
             <div>
               <div class="ai-t">Beat Auto-Cut</div>
               <div class="ai-s">Sync cuts to music beats</div>
             </div>
           </div>
-          <div class="ai-item" onclick="runAI('stabilize')"><span class="ai-ic">ðŸŽ¯</span>
+          <div class="ai-item" onclick="runAI('stabilize')"><span class="ai-ic">ST</span>
             <div>
               <div class="ai-t">Stabilize Video</div>
               <div class="ai-s">Remove camera shake</div>
             </div>
           </div>
-          <div class="ai-item" onclick="runAI('enhance')"><span class="ai-ic">ðŸ”</span>
+          <div class="ai-item" onclick="runAI('enhance')"><span class="ai-ic">4K</span>
             <div>
               <div class="ai-t">Super Resolution</div>
               <div class="ai-s">Upscale to 4K with AI</div>
             </div>
           </div>
-          <div class="ai-item" onclick="runAI('voice')"><span class="ai-ic">ðŸŽ­</span>
+          <div class="ai-item" onclick="runAI('voice')"><span class="ai-ic">VO</span>
             <div>
               <div class="ai-t">Voice Changer</div>
               <div class="ai-s">AI voice modulation & clone</div>
             </div>
           </div>
-          <div class="ai-item" onclick="runAI('portrait')"><span class="ai-ic">ðŸ‘¤</span>
+          <div class="ai-item" onclick="runAI('portrait')"><span class="ai-ic">PR</span>
             <div>
               <div class="ai-t">Portrait Enhance</div>
               <div class="ai-s">Skin, eyes, teeth enhance</div>
             </div>
           </div>
-          <div class="ai-item" onclick="runAI('auto-edit')"><span class="ai-ic">âš¡</span>
+          <div class="ai-item" onclick="runAI('auto-edit')"><span class="ai-ic">AE</span>
             <div>
               <div class="ai-t">One-Tap Auto Edit</div>
               <div class="ai-s">Full video in 60 seconds</div>
@@ -1664,9 +1928,9 @@
     <div class="preview">
       <div class="prev-bg"></div>
       <div class="prev-top">
-        <span class="rb" id="ratio-badge">9:16 Â· 1080Ã—1920</span>
+        <span class="rb" id="ratio-badge">9:16 | 1080x1920</span>
         <div class="zm">
-          <button class="zb" onclick="zoom(-10)">âˆ’</button>
+          <button class="zb" onclick="zoom(-10)">-</button>
           <span id="zoom-lbl"
             style="font-size:0.62rem;color:var(--text3);font-family:'JetBrains Mono',monospace;min-width:30px;text-align:center">100%</span>
           <button class="zb" onclick="zoom(10)">+</button>
@@ -1675,7 +1939,7 @@
       <div class="prev-canvas">
         <div class="prev-screen r916" id="prev-screen">
           <div class="prev-ph" id="prev-ph">
-            <div class="phi">ðŸŽ¬</div>
+            <div class="phi">VIDEO</div>
             <p>Add media to<br>start editing</p>
           </div>
         </div>
@@ -1683,13 +1947,14 @@
       <div class="prev-bot">
         <span class="td" id="cur-time">00:00</span>
         <div class="pctrl">
-          <button class="cb" onclick="skip(-5)" title="Back 5s">â®</button>
-          <button class="cb play" id="play-btn" onclick="togglePlay()">â–¶</button>
-          <button class="cb" onclick="skip(5)" title="Forward 5s">â­</button>
+          <button class="cb" onclick="skip(-5)" title="Back 5s">-5</button>
+          <button class="cb play" id="play-btn" onclick="togglePlay()">Play</button>
+          <button class="cb" onclick="restartPreview()" title="Restart">Restart</button>
+          <button class="cb" onclick="skip(5)" title="Forward 5s">+5</button>
         </div>
         <span class="td" id="tot-time" style="margin-left:0">/ 00:00</span>
-        <button class="cb" style="margin-left:auto" onclick="toggleMute()" id="mute-btn">ðŸ”Š</button>
-        <button class="cb" onclick="document.getElementById('prev-screen').requestFullscreen?.()">â›¶</button>
+        <button class="cb" style="margin-left:auto" onclick="toggleMute()" id="mute-btn">Sound</button>
+        <button class="cb" onclick="document.getElementById('prev-screen').requestFullscreen?.()">Full</button>
       </div>
     </div>
 
@@ -1712,7 +1977,7 @@
                 id="v-scale">100</span></div>
             <div class="pr"><span class="prn">Rotate</span><input type="range" class="prs" id="r-rotate" min="-180"
                 max="180" value="0" oninput="propChange('rotate',this.value,this)"><span class="prv"
-                id="v-rotate">0Â°</span></div>
+                id="v-rotate">0deg</span></div>
             <div class="pr"><span class="prn">Opacity</span><input type="range" class="prs" id="r-opacity" min="0"
                 max="100" value="100" oninput="propChange('opacity',this.value,this)"><span class="prv"
                 id="v-opacity">100%</span></div>
@@ -1724,21 +1989,21 @@
           <div class="pg2">
             <div class="pl">Speed</div>
             <div class="sp-btns">
-              <div class="sp-btn" onclick="setSpeed(0.1)">0.1Ã—</div>
-              <div class="sp-btn" onclick="setSpeed(0.25)">0.25Ã—</div>
-              <div class="sp-btn" onclick="setSpeed(0.5)">0.5Ã—</div>
-              <div class="sp-btn on" onclick="setSpeed(1)">1Ã—</div>
-              <div class="sp-btn" onclick="setSpeed(2)">2Ã—</div>
-              <div class="sp-btn" onclick="setSpeed(4)">4Ã—</div>
-              <div class="sp-btn" onclick="setSpeed(8)">8Ã—</div>
-              <div class="sp-btn" onclick="setSpeed(16)">16Ã—</div>
+              <div class="sp-btn" onclick="setSpeed(0.1)">0.1x</div>
+              <div class="sp-btn" onclick="setSpeed(0.25)">0.25x</div>
+              <div class="sp-btn" onclick="setSpeed(0.5)">0.5x</div>
+              <div class="sp-btn on" onclick="setSpeed(1)">1x</div>
+              <div class="sp-btn" onclick="setSpeed(2)">2x</div>
+              <div class="sp-btn" onclick="setSpeed(4)">4x</div>
+              <div class="sp-btn" onclick="setSpeed(8)">8x</div>
+              <div class="sp-btn" onclick="setSpeed(16)">16x</div>
             </div>
           </div>
           <div class="pg2">
             <div class="pl">Flip</div>
             <div class="flip-btns">
-              <div class="flip-btn" onclick="toggleFlip('x')">â†” Horizontal</div>
-              <div class="flip-btn" onclick="toggleFlip('y')">â†• Vertical</div>
+              <div class="flip-btn" onclick="toggleFlip('x')">Horizontal</div>
+              <div class="flip-btn" onclick="toggleFlip('y')">Vertical</div>
             </div>
           </div>
           <div class="pg2">
@@ -1749,12 +2014,16 @@
               <div class="sp-btn" onclick="setAspect('1:1',this)">1:1</div>
               <div class="sp-btn" onclick="setAspect('4:5',this)">4:5</div>
             </div>
+            <div class="sp-btns" style="margin-top:0.55rem">
+              <div class="sp-btn on" onclick="setCropMode('cover',this)">Fill Crop</div>
+              <div class="sp-btn" onclick="setCropMode('contain',this)">Fit Full</div>
+            </div>
           </div>
           <div class="pg2">
             <div class="pl">Actions</div>
             <div class="flip-btns">
-              <div class="flip-btn" onclick="toggleReverse()">â® Reverse</div>
-              <div class="flip-btn" onclick="toggleLoop()">ðŸ” Loop</div>
+              <div class="flip-btn" onclick="toggleReverse()">Reverse</div>
+              <div class="flip-btn" onclick="toggleLoop()">Loop</div>
             </div>
           </div>
         </div>
@@ -1800,10 +2069,10 @@
           <div class="pg2">
             <div class="pl">Audio Effects</div>
             <div class="sp-btns">
-              <div class="sp-btn" onclick="setAudioEffect('echo',this)">ðŸ” Echo</div>
-              <div class="sp-btn" onclick="setAudioEffect('reverb',this)">ðŸ”ï¸ Reverb</div>
-              <div class="sp-btn" onclick="setAudioEffect('denoise',this)">ðŸ”‡ Denoise</div>
-              <div class="sp-btn" onclick="setAudioEffect('bass',this)">ðŸŽ¸ Bass</div>
+              <div class="sp-btn" onclick="setAudioEffect('echo',this)">Echo</div>
+              <div class="sp-btn" onclick="setAudioEffect('reverb',this)">Reverb</div>
+              <div class="sp-btn" onclick="setAudioEffect('denoise',this)">Denoise</div>
+              <div class="sp-btn" onclick="setAudioEffect('bass',this)">Bass</div>
             </div>
           </div>
         </div>
@@ -1817,7 +2086,7 @@
                 <div class="opt" onclick="setExp('res','480p',this)">480p</div>
                 <div class="opt" onclick="setExp('res','720p',this)">720p</div>
                 <div class="opt on" onclick="setExp('res','1080p',this)">1080p</div>
-                <div class="opt" onclick="setExp('res','4K',this)">4K â­</div>
+                <div class="opt" onclick="setExp('res','4K',this)">4K Pro</div>
               </div>
             </div>
             <div class="pg2">
@@ -1845,7 +2114,7 @@
               </div>
             </div>
           </div>
-          <button class="exp-full" onclick="doExport()">â¬† Export Video Now</button>
+          <button class="exp-full" onclick="doExport()">Export Video Now</button>
         </div>
 
       </div>
@@ -1854,47 +2123,44 @@
     <!-- TIMELINE -->
     <div class="timeline">
       <div class="tl-head">
-        <button class="tl-btn" onclick="addClip('video','ðŸŽ¬ New Clip')">+ Video</button>
-        <button class="tl-btn" onclick="addClip('audio','ðŸŽµ Audio')">+ Audio</button>
-        <button class="tl-btn" onclick="addClip('text','ðŸ”¤ Text')">+ Text</button>
-        <button class="tl-btn" onclick="addClip('fx','âœ¨ FX')">+ FX</button>
+        <button class="tl-btn" onclick="addClip('video','New Clip')">+ Video</button>
+        <button class="tl-btn" onclick="addClip('audio','Audio')">+ Audio</button>
+        <button class="tl-btn" onclick="addClip('text','Text')">+ Text</button>
+        <button class="tl-btn" onclick="addClip('fx','FX')">+ FX</button>
         <div class="tb-sep"></div>
-        <button class="tl-btn" onclick="splitAtPlayhead()">âš¡ Split</button>
-        <button class="tl-btn" onclick="delSelected()">ðŸ—‘ Delete</button>
+        <button class="tl-btn" onclick="nudgeSelectedClip(-1)">Back 1s</button>
+        <button class="tl-btn" onclick="nudgeSelectedClip(1)">Next 1s</button>
+        <button class="tl-btn" onclick="trimSelectedClip('start')">Trim Start</button>
+        <button class="tl-btn" onclick="trimSelectedClip('end')">Trim End</button>
+        <button class="tl-btn" onclick="splitAtPlayhead()">Split</button>
+        <button class="tl-btn" onclick="delSelected()">Delete</button>
         <div class="tl-zoom">
           Zoom:
-          <button class="tl-btn" onclick="tlZoom(-0.5)">âˆ’</button>
-          <span id="tl-zoom">1Ã—</span>
+          <button class="tl-btn" onclick="tlZoom(-0.5)">-</button>
+          <span id="tl-zoom">1x</span>
           <button class="tl-btn" onclick="tlZoom(0.5)">+</button>
         </div>
       </div>
       <div class="tl-body">
         <div class="tl-labels" id="tl-labels">
-          <div class="tl-lbl">ðŸŽ¬ V1</div>
-          <div class="tl-lbl">ðŸŽ¬ V2</div>
-          <div class="tl-lbl">ðŸŽµ A1</div>
-          <div class="tl-lbl">ðŸ”¤ T1</div>
-          <div class="tl-lbl">âœ¨ FX</div>
-          <div class="add-track" onclick="addClip('video','ðŸŽ¬ Track')">+ Add Track</div>
+          <div class="tl-lbl">V1</div>
+          <div class="tl-lbl">V2</div>
+          <div class="tl-lbl">A1</div>
+          <div class="tl-lbl">T1</div>
+          <div class="tl-lbl">FX</div>
+          <div class="add-track" onclick="addClip('video','Track')">+ Add Track</div>
         </div>
         <div class="tl-tracks" id="tl-tracks">
           <div class="ruler" id="ruler"></div>
           <div class="tl-row" id="row-v1">
-            <div class="clip clip-v" style="left:0%;width:38%" onclick="selectClip(this)">ðŸŽ¬ Clip 01</div>
-            <div class="clip clip-v" style="left:40%;width:28%" onclick="selectClip(this)">ðŸŽ¬ Clip 02</div>
           </div>
           <div class="tl-row" id="row-v2">
-            <div class="clip clip-v" style="left:18%;width:22%;opacity:0.65" onclick="selectClip(this)">ðŸ–¼ Overlay</div>
           </div>
           <div class="tl-row" id="row-a1">
-            <div class="clip clip-a" style="left:0%;width:72%" onclick="selectClip(this)">ðŸŽµ Background Music</div>
           </div>
           <div class="tl-row" id="row-t1">
-            <div class="clip clip-t" style="left:4%;width:18%" onclick="selectClip(this)">ðŸ”¤ Title</div>
-            <div class="clip clip-t" style="left:45%;width:14%" onclick="selectClip(this)">ðŸ”¤ Subtitle</div>
           </div>
           <div class="tl-row" id="row-fx">
-            <div class="clip clip-fx" style="left:8%;width:14%" onclick="selectClip(this)">âœ¨ Glitch</div>
           </div>
           <div class="playhead" id="playhead" style="left:18%"></div>
         </div>
@@ -1906,13 +2172,13 @@
   <!-- EXPORT MODAL -->
   <div class="overlay" id="exp-modal" onclick="if(event.target===this)closeExport()">
     <div class="modal">
-      <h3>â¬† Export Video</h3>
+      <h3>Export Video</h3>
       <div class="mfg"><label>Resolution</label>
         <div class="opt-row" id="exp-res">
           <div class="opt" onclick="pickOpt(this,'res')">480p</div>
           <div class="opt" onclick="pickOpt(this,'res')">720p</div>
           <div class="opt on" onclick="pickOpt(this,'res')">1080p</div>
-          <div class="opt" onclick="pickOpt(this,'res')">4K â­</div>
+          <div class="opt" onclick="pickOpt(this,'res')">4K Pro</div>
         </div>
       </div>
       <div class="mfg"><label>Frame Rate</label>
@@ -1931,7 +2197,7 @@
       </div>
       <div class="ma">
         <button class="btn-cancel" onclick="closeExport()">Cancel</button>
-        <button class="btn-exp" onclick="doExport()">Start Export â†’</button>
+        <button class="btn-exp" onclick="doExport()">Start Export</button>
       </div>
     </div>
   </div>
@@ -1953,9 +2219,9 @@
       zoom: 100, tlZoom: 1, tool: 'cut', muted: false,
       expSettings: { res: '1080p', fps: 30, fmt: 'mp4', q: 'high' },
       colorGrade: {}, transform: { scale: 100, rotate: 0, opacity: 100, x: 0, y: 0, flipX: false, flipY: false },
-      ai: {}, aspectRatio: '9:16', volume: 100, speed: 1, captions: [], captionText: '',
-      activeFX: new Set(), audioEffects: new Set(), reversed: false, loop: false,
-      autoSave: null, selectedClip: null, activeMedia: null, media: new Map()
+      ai: {}, aspectRatio: '9:16', volume: 100, speed: 1, captions: [], captionText: '', textStyle: 'basic', textColor: '#ffffff', textPosition: { x: 50, y: 18 }, selectedAudio: null, background: null,
+      activeFX: new Set(), audioEffects: new Set(), cropMode: 'cover', activeTransition: '', reversed: false, loop: false,
+      autoSave: null, selectedClip: null, activeMedia: null, media: new Map(), timelineDrag: null, suppressTimelineClick: false
     };
 
     function esc(s = '') {
@@ -1986,7 +2252,7 @@
     function toast(msg, type = 'ok') {
       const el = document.createElement('div');
       el.className = 'toast ' + type;
-      el.textContent = (type === 'ok' ? 'âœ“ ' : 'âœ• ') + msg;
+      el.textContent = (type === 'ok' ? 'OK: ' : 'Error: ') + msg;
       document.getElementById('toasts').appendChild(el);
       setTimeout(() => el.remove(), 2500);
     }
@@ -2008,8 +2274,8 @@
         const ratioMap = { '9:16': 'r916', '16:9': 'r169', '1:1': 'r11', '4:5': 'r45', '21:9': 'r169' };
         const sc = document.getElementById('prev-screen');
         sc.className = 'prev-screen ' + (ratioMap[d.project.aspectRatio] || 'r916');
-        document.getElementById('ratio-badge').textContent = d.project.aspectRatio + ' Â· ' + (d.project.aspectRatio === '16:9' ? '1920Ã—1080' : '1080Ã—1920');
-        document.getElementById('save-status').textContent = 'âœ“ Saved';
+        document.getElementById('ratio-badge').textContent = d.project.aspectRatio + ' | ' + (d.project.aspectRatio === '16:9' ? '1920x1080' : '1080x1920');
+        document.getElementById('save-status').textContent = 'Saved';
         toast('Project loaded: ' + d.project.title);
       } else {
         S.projectId = null;
@@ -2028,7 +2294,7 @@
         d.videos.forEach(v => S.media.set(v._id, v));
         g.innerHTML = d.videos.map(v => `
         <div class="mi v16" draggable="true" ondragstart="dragMedia(event,'${v._id}')" onclick="addToTimeline('${v._id}','${esc(v.title || v.originalName || 'Video')}')" ondblclick="loadPreview('${v._id}')" title="${esc(v.title || v.originalName || 'Video')}">
-          ðŸŽžï¸<div class="mi-name">${esc(v.title || v.originalName || 'Video')}</div><div class="mi-lbl">+Add</div>
+          <div class="mi-name">${esc(v.title || v.originalName || 'Video')}</div><div class="mi-lbl">+Add</div>
         </div>`).join('');
       } else {
         g.innerHTML = `<div style="color:var(--text3);font-size:0.7rem;grid-column:1/-1;text-align:center;padding:0.5rem">${d?.message || 'Upload videos to see here'}</div>`;
@@ -2039,11 +2305,11 @@
     async function loadEditorTpls() {
       const d = await api('/templates?limit=12');
       const c = document.getElementById('editor-tpls');
-      const tIc = { vlog: 'ðŸŒ†', dance: 'ðŸ’ƒ', travel: 'ðŸ”ï¸', gaming: 'ðŸŽ®', fashion: 'ðŸ‘—', food: 'ðŸ•', education: 'ðŸŽ“', music: 'ðŸŽµ', reels: 'âœ¨' };
+      const tIc = { vlog: 'VLOG', dance: 'DANCE', travel: 'TRIP', gaming: 'GAME', fashion: 'STYLE', food: 'FOOD', education: 'EDU', music: 'MUSIC', reels: 'REEL' };
       const tClr = ['linear-gradient(160deg,#1a0050,#500030)', 'linear-gradient(160deg,#003050,#001540)', 'linear-gradient(160deg,#004030,#002050)', 'linear-gradient(160deg,#500000,#300050)', 'linear-gradient(160deg,#002040,#001540)', 'linear-gradient(160deg,#301020,#100040)'];
       if (d && d.templates && d.templates.length) {
         c.innerHTML = `<div class="lut-g">${d.templates.map((t, i) => `
-        <div class="lut" style="background:${tClr[i % 6]}" onclick="applyTpl('${t._id}')" title="${t.title}">${tIc[t.category] || 'ðŸŽ¬'}</div>`).join('')}</div>`;
+        <div class="lut" style="background:${tClr[i % 6]}" onclick="applyTpl('${t._id}')" title="${t.title}">${tIc[t.category] || 'VIDEO'}</div>`).join('')}</div>`;
       } else {
         c.innerHTML = '<div style="color:var(--text3);font-size:0.7rem;text-align:center;padding:1rem">No templates. Run seed first.</div>';
       }
@@ -2051,7 +2317,7 @@
 
     // Panel switching
     function switchPanel(name, btn) {
-      ['media', 'text', 'effects', 'transitions', 'stickers', 'audio', 'ai', 'tpl'].forEach(p => {
+      ['media', 'bg', 'text', 'effects', 'transitions', 'stickers', 'audio', 'ai', 'tpl'].forEach(p => {
         const el = document.getElementById('p-' + p);
         if (el) el.style.display = 'none';
       });
@@ -2060,6 +2326,7 @@
       document.querySelectorAll('.tool').forEach(t => t.classList.remove('on'));
       if (btn) btn.classList.add('on');
       if (name === 'tpl') loadEditorTpls();
+      if (name === 'text') setTimeout(() => document.getElementById('custom-text')?.focus(), 0);
     }
 
     // Right panel switching
@@ -2088,23 +2355,121 @@
     }
     function addClip(type, name, meta = {}) {
       const rowMap = { video: 'row-v1', audio: 'row-a1', text: 'row-t1', fx: 'row-fx' };
-      const row = document.getElementById(rowMap[type] || 'row-v1');
+      const baseRow = document.getElementById(rowMap[type] || 'row-v1');
+      const row = type === 'video' && !baseRow?.querySelector('.clip')
+        ? baseRow
+        : createTimelineRow(type, name || type);
       if (!row) return;
       const clip = document.createElement('div');
       clip.className = 'clip clip-' + (type === 'video' ? 'v' : type === 'audio' ? 'a' : type === 'text' ? 't' : 'fx');
-      clip.style.left = '70%'; clip.style.width = '20%';
+      const startPct = secondsToPct(Math.min(S.t || 0, effectiveDuration()));
+      const leftPct = type === 'video' ? 0 : Math.max(0, Math.min(92, startPct));
+      const desiredWidth = type === 'video' ? 100 : Math.max(8, secondsToPct(type === 'audio' ? 5 : 3));
+      clip.style.left = leftPct + '%';
+      clip.style.width = Math.max(1, Math.min(desiredWidth, 100 - leftPct)) + '%';
       clip.textContent = name || type;
       if (meta.mediaId) clip.dataset.mediaId = meta.mediaId;
+      if (meta.audioSrc) clip.dataset.audioSrc = meta.audioSrc;
+      clip.dataset.id = meta.id || ('clip-' + Date.now() + '-' + Math.floor(Math.random() * 1000));
       clip.onclick = () => selectClip(clip);
       row.appendChild(clip);
       selectClip(clip);
       toast(name + ' added to timeline');
+      syncTimelineDuration();
       schedSave();
+      return clip;
+    }
+    function createTimelineRow(type, label = '') {
+      const tracks = document.getElementById('tl-tracks');
+      const labels = document.getElementById('tl-labels');
+      const playhead = document.getElementById('playhead');
+      const row = document.createElement('div');
+      row.className = 'tl-row';
+      row.dataset.dynamic = '1';
+      row.dataset.type = type;
+      row.id = 'row-' + type + '-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+      tracks.insertBefore(row, playhead);
+
+      const lbl = document.createElement('div');
+      lbl.className = 'tl-lbl';
+      lbl.dataset.rowId = row.id;
+      const prefix = type === 'audio' ? 'A' : type === 'text' ? 'T' : type === 'fx' ? 'FX' : 'V';
+      lbl.textContent = prefix + ' ' + String(label || '').slice(0, 12);
+      const addTrack = labels.querySelector('.add-track');
+      labels.insertBefore(lbl, addTrack || null);
+      return row;
     }
     function addToTimeline(id, name) {
       const item = S.media.get(id);
-      addClip('video', 'ðŸŽž ' + (item?.title || name || 'Video'), { mediaId: id });
+      addClip('video', item?.title || name || 'Video', { mediaId: id });
       if (item) loadPreview(id);
+    }
+    function clipBounds(clip) {
+      return {
+        left: parseFloat(clip.style.left) || 0,
+        width: parseFloat(clip.style.width) || 20
+      };
+    }
+    function setClipBounds(clip, left, width) {
+      const minWidth = Math.max(1, (0.35 / Math.max(1, S.dur)) * 100);
+      const nextWidth = Math.max(minWidth, Math.min(100, width));
+      const nextLeft = Math.max(0, Math.min(100 - nextWidth, left));
+      clip.style.left = nextLeft + '%';
+      clip.style.width = nextWidth + '%';
+    }
+    function secondsToPct(seconds) {
+      return (seconds / Math.max(1, S.dur)) * 100;
+    }
+    function pctToTime(pct) {
+      return (pct / 100) * Math.max(1, S.dur);
+    }
+    function primaryVideoClip() {
+      return document.querySelector('.clip-v[data-media-id]') || document.querySelector('#row-v1 .clip-v') || document.querySelector('.clip-v');
+    }
+    function timelinePctFromTime(time) {
+      const clip = primaryVideoClip();
+      const b = clip ? clipBounds(clip) : { left: 0, width: 100 };
+      const progress = Math.max(0, Math.min(1, (time || 0) / Math.max(0.1, S.dur || 0.1)));
+      return Math.max(0, Math.min(100, b.left + (b.width * progress)));
+    }
+    function timeFromTimelinePct(pct) {
+      const clip = primaryVideoClip();
+      const b = clip ? clipBounds(clip) : { left: 0, width: 100 };
+      const clamped = Math.max(b.left, Math.min(b.left + b.width, pct));
+      return ((clamped - b.left) / Math.max(0.1, b.width)) * Math.max(0.1, S.dur || 0.1);
+    }
+    function effectiveDuration() {
+      return Math.max(0.1, S.dur || 0.1);
+    }
+    function syncTimelineDuration() {
+      S.t = Math.max(0, Math.min(S.t, S.dur));
+      updateTime();
+      buildRuler();
+    }
+    function nudgeSelectedClip(seconds) {
+      const clip = S.selectedClip;
+      if (!clip) return toast('Select a clip first', 'err');
+      const b = clipBounds(clip);
+      setClipBounds(clip, b.left + secondsToPct(seconds), b.width);
+      syncTimelineDuration();
+      toast((seconds < 0 ? 'Moved back ' : 'Moved next ') + Math.abs(seconds) + 's');
+      schedSave();
+    }
+    function trimSelectedClip(side) {
+      const clip = S.selectedClip;
+      if (!clip) return toast('Select a clip first', 'err');
+      const b = clipBounds(clip);
+      const playPct = timelinePctFromTime(S.t);
+      if (playPct <= b.left || playPct >= b.left + b.width) return toast('Move playhead inside selected clip', 'err');
+      if (side === 'start') {
+        setClipBounds(clip, playPct, b.left + b.width - playPct);
+        toast('Start trimmed to playhead');
+      } else {
+        setClipBounds(clip, b.left, playPct - b.left);
+        toast('End trimmed to playhead');
+      }
+      syncTimelineDuration();
+      schedSave();
     }
     function dragMedia(event, id) {
       event.dataTransfer.setData('text/plain', id);
@@ -2116,6 +2481,7 @@
       S.activeMedia = item;
       const screen = document.getElementById('prev-screen');
       screen.innerHTML = `<video class="preview-media" id="preview-media" src="${mediaUrl(item)}" playsinline preload="metadata"></video>`;
+      applyBackground();
       const video = document.getElementById('preview-media');
       video.muted = S.muted;
       video.volume = Math.max(0, Math.min(1, S.volume / 100));
@@ -2123,7 +2489,7 @@
       video.currentTime = Math.min(S.t, video.duration || S.t || 0);
       video.addEventListener('loadedmetadata', () => {
         if (Number.isFinite(video.duration) && video.duration > 0) {
-          S.dur = Math.round(video.duration);
+          S.dur = video.duration;
           updateTime();
           buildRuler();
         }
@@ -2131,6 +2497,44 @@
       applyPreviewStyles();
       renderOverlays();
       toast('Loaded in preview: ' + (item.title || item.originalName || 'Video'));
+    }
+    function applyBackground() {
+      const screen = document.getElementById('prev-screen');
+      if (!screen) return;
+      if (!S.background) {
+        screen.style.background = '#1a1a30';
+        screen.style.backgroundImage = '';
+        return;
+      }
+      if (S.background.type === 'image') {
+        screen.style.background = '#000';
+        screen.style.backgroundImage = `url("${S.background.value}")`;
+        screen.style.backgroundSize = 'cover';
+        screen.style.backgroundPosition = 'center';
+      } else {
+        screen.style.background = S.background.value;
+        screen.style.backgroundImage = '';
+      }
+    }
+    function setBackground(type, value) {
+      S.background = { type, value };
+      applyBackground();
+      if (previewVideo()) setCropMode('contain');
+      addClip('fx', 'Background');
+      toast('Background added');
+      schedSave();
+    }
+    function clearBackground() {
+      S.background = null;
+      applyBackground();
+      toast('Background removed');
+      schedSave();
+    }
+    function handleBackgroundUpload(input) {
+      const file = input.files?.[0];
+      if (!file) return;
+      setBackground('image', URL.createObjectURL(file));
+      input.value = '';
     }
     function previewVideo() { return document.getElementById('preview-media'); }
     function applyPreviewStyles() {
@@ -2160,7 +2564,8 @@
         S.ai.backgroundRemoved ? 'contrast(115%)' : ''
       ];
       video.style.filter = filterParts.filter(Boolean).join(' ');
-      video.style.objectFit = 'cover';
+      video.style.objectFit = S.cropMode || 'cover';
+      video.style.objectPosition = 'center';
       video.muted = S.muted;
       video.volume = Math.max(0, Math.min(1, S.volume / 100));
       video.playbackRate = S.speed;
@@ -2168,6 +2573,10 @@
       document.getElementById('prev-screen').classList.toggle('fx-shake', S.activeFX.has('Shake'));
       document.getElementById('prev-screen').classList.toggle('fx-flash', S.activeFX.has('Flash'));
       document.getElementById('prev-screen').classList.toggle('fx-rgb', S.activeFX.has('RGB Split'));
+      document.getElementById('prev-screen').classList.toggle('fx-zoom', S.activeFX.has('Zoom'));
+      document.getElementById('prev-screen').classList.toggle('fx-glitch', S.activeFX.has('Glitch'));
+      document.getElementById('prev-screen').classList.toggle('fx-film', S.activeFX.has('Film Grain'));
+      document.getElementById('prev-screen').classList.toggle('fx-neon', S.activeFX.has('Neon'));
     }
     function addPreviewBadge(text) {
       const screen = document.getElementById('prev-screen');
@@ -2179,7 +2588,7 @@
     }
     function renderOverlays() {
       if (S.captionText) addCaptionOverlay(S.captionText, false);
-      if (S.titleText) addTextOverlay(S.titleText);
+      renderTimedTextOverlays();
     }
     function addCaptionOverlay(text = 'Auto caption: your spoken words appear here', shouldToast = true) {
       const screen = document.getElementById('prev-screen');
@@ -2196,17 +2605,71 @@
       if (input && input.value !== text) input.value = text;
       if (shouldToast) toast('Caption added to preview');
     }
-    function addTextOverlay(text) {
-      const screen = document.getElementById('prev-screen');
-      let overlay = document.getElementById('text-overlay');
-      if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.id = 'text-overlay';
-        overlay.className = 'text-overlay';
-        screen.appendChild(overlay);
+    function applyTextVisual(overlay, style = 'basic', color = '#ffffff') {
+      overlay.style.fontFamily = style === 'title' ? "'Bebas Neue', sans-serif" : "'Outfit', sans-serif";
+      overlay.style.fontSize = style === 'caption' ? '0.78rem' : style === 'title' ? '1.35rem' : '1rem';
+      overlay.style.color = style === 'outline' ? 'transparent' : color;
+      overlay.style.webkitTextStroke = style === 'outline' ? `1px ${color}` : '0';
+      overlay.style.textShadow = style === 'neon' ? `0 0 12px ${color}, 0 2px 8px #000` : '0 2px 8px #000';
+      if (style === 'gradient') {
+        overlay.style.background = 'linear-gradient(135deg,#ff3e6c,#6c3eff)';
+        overlay.style.webkitBackgroundClip = 'text';
+        overlay.style.webkitTextFillColor = 'transparent';
+      } else {
+        overlay.style.background = '';
+        overlay.style.webkitBackgroundClip = '';
+        overlay.style.webkitTextFillColor = '';
       }
-      overlay.textContent = text;
-      S.titleText = text;
+    }
+    function createTextOverlayFromClip(clip, stackIndex = 0) {
+      const screen = document.getElementById('prev-screen');
+      if (!screen) return null;
+      const overlay = document.createElement('div');
+      overlay.className = 'text-overlay';
+      overlay.dataset.clipId = clip.dataset.id;
+      overlay.textContent = clip.dataset.text || clip.textContent.trim();
+      overlay.style.left = (parseFloat(clip.dataset.x) || 50) + '%';
+      overlay.style.top = (parseFloat(clip.dataset.y) || (18 + stackIndex * 10)) + '%';
+      applyTextVisual(overlay, clip.dataset.style || 'basic', clip.dataset.color || '#ffffff');
+      screen.appendChild(overlay);
+      return overlay;
+    }
+    function addTextOverlay(text) {
+      const clip = addClip('text', text);
+      if (!clip) return;
+      clip.dataset.text = text;
+      clip.dataset.style = S.textStyle || 'basic';
+      clip.dataset.color = S.textColor || '#ffffff';
+      clip.dataset.x = '50';
+      clip.dataset.y = String(18 + (document.querySelectorAll('.clip-t[data-text]').length % 5) * 10);
+      renderOverlays();
+    }
+    function renderTimedTextOverlays() {
+      const screen = document.getElementById('prev-screen');
+      if (!screen || S.textDrag) return;
+      screen.querySelectorAll('.text-overlay').forEach(el => el.remove());
+      const active = Array.from(document.querySelectorAll('.clip-t[data-text]')).filter(clip => {
+        const b = clipBounds(clip);
+        const p = timelinePctFromTime(S.t);
+        return p >= b.left && p <= b.left + b.width;
+      });
+      active.forEach((clip, i) => createTextOverlayFromClip(clip, i));
+    }
+    function moveTextOverlay(clientX, clientY) {
+      const screen = document.getElementById('prev-screen');
+      const overlay = document.querySelector('.text-overlay[data-dragging="1"]');
+      if (!screen || !overlay) return;
+      const rect = screen.getBoundingClientRect();
+      const x = Math.max(8, Math.min(92, ((clientX - rect.left) / rect.width) * 100));
+      const y = Math.max(8, Math.min(92, ((clientY - rect.top) / rect.height) * 100));
+      S.textPosition = { x, y };
+      overlay.style.left = x + '%';
+      overlay.style.top = y + '%';
+      const clip = document.querySelector(`.clip[data-id="${overlay.dataset.clipId}"]`);
+      if (clip) {
+        clip.dataset.x = String(x);
+        clip.dataset.y = String(y);
+      }
     }
     function captionLinesFromText(text) {
       return String(text || '').split(/[.!?\n]+/).map(s => s.trim()).filter(Boolean);
@@ -2224,15 +2687,14 @@
       addClip('text', 'Auto Captions');
       schedSave();
     }
-    async function translateCaptions() {
+    function applyCaptions() {
       const input = document.getElementById('caption-text');
-      const lang = document.getElementById('caption-lang')?.value || 'en';
       const source = (input?.value || S.captionText || '').trim();
-      if (!source) return toast('Generate or type captions first', 'err');
-      const translated = await translateText(source, lang);
-      S.captions = captionLinesFromText(translated).map((text, i) => ({ start: i * 3, end: (i + 1) * 3, text }));
-      addCaptionOverlay(translated);
-      toast('Captions translated to ' + lang.toUpperCase());
+      if (!source) return toast('Type captions first', 'err');
+      S.captions = captionLinesFromText(source).map((text, i) => ({ start: i * 3, end: (i + 1) * 3, text }));
+      addCaptionOverlay(source);
+      addClip('text', 'Captions');
+      toast('Captions applied');
       schedSave();
     }
     async function translateText(text, lang) {
@@ -2271,32 +2733,104 @@
       const lines = text.split('\n').map(line => dict[lang]?.[line.trim()] || line.replace(/\b(video|ready|watch|title|caption)\b/gi, m => words[lang]?.[m.toLowerCase()] || m));
       return lines.join('\n');
     }
+    function updateTextDraft() {
+      const input = document.getElementById('custom-text');
+      const preview = document.getElementById('text-draft-preview');
+      if (!preview) return;
+      preview.textContent = (input?.value || '').trim() || 'Your text preview';
+      preview.style.fontFamily = S.textStyle === 'title' ? "'Bebas Neue', sans-serif" : "'Outfit', sans-serif";
+      preview.style.fontSize = S.textStyle === 'caption' ? '0.78rem' : S.textStyle === 'title' ? '1.35rem' : '1rem';
+      preview.style.color = S.textStyle === 'outline' ? 'transparent' : '#fff';
+      preview.style.webkitTextStroke = S.textStyle === 'outline' ? '1px #ff3e6c' : '0';
+      preview.style.textShadow = S.textStyle === 'neon' ? '0 0 12px #00e5ff, 0 2px 8px #000' : '0 2px 8px #000';
+      if (S.textStyle === 'gradient') {
+        preview.style.background = 'linear-gradient(135deg,#ff3e6c,#6c3eff)';
+        preview.style.webkitBackgroundClip = 'text';
+        preview.style.webkitTextFillColor = 'transparent';
+      } else {
+        preview.style.background = '';
+        preview.style.webkitBackgroundClip = '';
+        preview.style.webkitTextFillColor = '';
+        preview.style.color = S.textStyle === 'outline' ? 'transparent' : (S.textColor || '#ffffff');
+      }
+    }
+    function setTextStyle(style, btn) {
+      S.textStyle = style || 'basic';
+      document.querySelectorAll('#p-text .mini-btn').forEach(b => b.classList.remove('on'));
+      btn?.classList.add('on');
+      updateTextDraft();
+    }
+    function setTextColor(color, btn) {
+      S.textColor = color || '#ffffff';
+      document.querySelectorAll('#p-text .color-dot').forEach(dot => dot.classList.remove('on'));
+      btn?.classList.add('on');
+      updateTextDraft();
+    }
+    function useTextPreset(text, style, el) {
+      const input = document.getElementById('custom-text');
+      if (input) input.value = text;
+      S.textStyle = style || 'basic';
+      document.querySelectorAll('.ts-item').forEach(item => item.classList.remove('on'));
+      el?.classList.add('on');
+      document.querySelectorAll('#p-text .mini-btn').forEach(btn => btn.classList.toggle('on', btn.textContent.trim().toLowerCase() === (style || 'basic')));
+      updateTextDraft();
+      document.getElementById('custom-text')?.focus();
+    }
     function addCustomText(fallback = '') {
       const input = document.getElementById('custom-text');
       const text = (input?.value || fallback || prompt('Enter text:', 'My Title') || '').trim();
       if (!text) return toast('Text is empty', 'err');
       addTextOverlay(text);
-      addClip('text', 'ðŸ”¤ ' + text);
       if (input) input.value = '';
+      updateTextDraft();
       schedSave();
     }
     function setAspect(ratio, btn) {
       const classMap = { '9:16': 'r916', '16:9': 'r169', '1:1': 'r11', '4:5': 'r45' };
-      const labelMap = { '9:16': '1080Ã—1920', '16:9': '1920Ã—1080', '1:1': '1080Ã—1080', '4:5': '1080Ã—1350' };
+      const labelMap = { '9:16': '1080x1920', '16:9': '1920x1080', '1:1': '1080x1080', '4:5': '1080x1350' };
       S.aspectRatio = ratio;
       const screen = document.getElementById('prev-screen');
       screen.classList.remove('r916', 'r169', 'r11', 'r45');
       screen.classList.add(classMap[ratio] || 'r916');
       document.getElementById('ratio-display').textContent = ratio;
-      document.getElementById('ratio-badge').textContent = ratio + ' Â· ' + (labelMap[ratio] || '1080Ã—1920');
+      document.getElementById('ratio-badge').textContent = ratio + ' | ' + (labelMap[ratio] || '1080x1920');
       btn?.parentElement?.querySelectorAll('.sp-btn').forEach(b => b.classList.remove('on'));
       btn?.classList.add('on');
       toast('Aspect ratio changed: ' + ratio);
       schedSave();
     }
+    function setCropMode(mode, btn) {
+      S.cropMode = mode === 'contain' ? 'contain' : 'cover';
+      btn?.parentElement?.querySelectorAll('.sp-btn').forEach(b => b.classList.remove('on'));
+      btn?.classList.add('on');
+      applyPreviewStyles();
+      toast(S.cropMode === 'cover' ? 'Fill crop applied' : 'Fit full video applied');
+      schedSave();
+    }
     function addTransition(name) {
       addClip('fx', name + ' Transition');
-      toast(name + ' transition added');
+      S.activeTransition = name;
+      const screen = document.getElementById('prev-screen');
+      const transitionClasses = ['fx-transition', 'tr-slide-left', 'tr-slide-right', 'tr-zoom-in', 'tr-zoom-out', 'tr-spin'];
+      screen.classList.remove(...transitionClasses);
+      void screen.offsetWidth;
+      const map = {
+        Fade: 'fx-transition',
+        Dissolve: 'fx-transition',
+        'Film Burn': 'fx-transition',
+        'Luma Fade': 'fx-transition',
+        'Slide Left': 'tr-slide-left',
+        'Slide Right': 'tr-slide-right',
+        'Whip Pan': 'tr-slide-left',
+        'Zoom In': 'tr-zoom-in',
+        'Zoom Out': 'tr-zoom-out',
+        Spin: 'tr-spin',
+        Glitch: 'fx-transition'
+      };
+      const cls = map[name];
+      if (cls) screen.classList.add(cls);
+      applyPreviewStyles();
+      toast(name + ' transition applied');
       schedSave();
     }
     function applyFX(name) {
@@ -2321,13 +2855,49 @@
       schedSave();
     }
     function addSticker(em) { addClip('text', em + ' Sticker'); }
-    function addAudio(name) { addClip('audio', name); }
+    function selectAudio(name, el, src = '') {
+      S.selectedAudio = { name, src };
+      document.querySelectorAll('#p-audio .audio-item').forEach(item => item.classList.remove('on'));
+      el?.classList.add('on');
+      const label = document.getElementById('selected-audio');
+      if (label) label.textContent = 'Selected: ' + name;
+      const bgLabel = document.getElementById('selected-bg-audio');
+      if (bgLabel) bgLabel.textContent = 'Selected: ' + name;
+      toast('Audio selected: ' + name);
+    }
+    function addSelectedAudio() {
+      if (!S.selectedAudio) return toast('Choose or upload audio first', 'err');
+      addAudio(S.selectedAudio.name, S.selectedAudio.src);
+    }
+    function addAudio(name, src = '') {
+      addClip('audio', name || 'Audio', { audioSrc: src });
+      if (src) {
+        let audio = document.getElementById('preview-audio');
+        if (!audio) {
+          audio = document.createElement('audio');
+          audio.id = 'preview-audio';
+          audio.style.display = 'none';
+          document.body.appendChild(audio);
+        }
+        audio.src = src;
+        audio.volume = Math.max(0, Math.min(1, S.volume / 100));
+      }
+      toast('Audio added to timeline');
+    }
+    function handleAudioUpload(input) {
+      const file = input.files?.[0];
+      if (!file) return;
+      const src = URL.createObjectURL(file);
+      const name = file.name.replace(/\.[^/.]+$/, '');
+      selectAudio(name, null, src);
+      addAudio(name, src);
+      input.value = '';
+    }
     function splitAtPlayhead() {
       const clip = S.selectedClip;
       if (!clip) return toast('Select a clip first', 'err');
-      const left = parseFloat(clip.style.left) || 0;
-      const width = parseFloat(clip.style.width) || 20;
-      const pct = Math.max(left + 2, Math.min(left + width - 2, (S.t / S.dur) * 100));
+      const { left, width } = clipBounds(clip);
+      const pct = Math.max(left + 1, Math.min(left + width - 1, timelinePctFromTime(S.t)));
       if (pct <= left || pct >= left + width) return toast('Move playhead inside selected clip', 'err');
       const right = clip.cloneNode(true);
       right.style.left = pct + '%';
@@ -2341,7 +2911,20 @@
       toast('Split at ' + document.getElementById('cur-time').textContent);
       schedSave();
     }
-    function delSelected() { if (S.selectedClip) { S.selectedClip.remove(); S.selectedClip = null; toast('Clip deleted'); schedSave(); } else toast('Select a clip first', 'err'); }
+    function delSelected() {
+      if (!S.selectedClip) return toast('Select a clip first', 'err');
+      const row = S.selectedClip.parentElement;
+      const rowId = row?.id;
+      S.selectedClip.remove();
+      S.selectedClip = null;
+      if (row?.dataset.dynamic === '1' && !row.querySelector('.clip')) {
+        row.remove();
+        document.querySelector(`.tl-lbl[data-row-id="${rowId}"]`)?.remove();
+      }
+      syncTimelineDuration();
+      toast('Clip deleted');
+      schedSave();
+    }
     function applyTpl(id) { toast('Template applied to timeline!'); schedSave(); }
     function toggleFlip(axis) {
       if (axis === 'x') S.transform.flipX = !S.transform.flipX;
@@ -2375,6 +2958,7 @@
     let playInterval = null;
     function togglePlay() {
       const video = previewVideo();
+      const audio = document.getElementById('preview-audio');
       S.playing = !S.playing;
       document.getElementById('play-btn').textContent = S.playing ? 'Pause' : 'Play';
       if (S.playing) {
@@ -2384,6 +2968,12 @@
           video.playbackRate = S.speed;
           video.currentTime = Math.min(S.t, video.duration || S.t);
           if (!S.reversed) video.play().catch(() => toast('Click the video/play button once to allow audio.', 'err'));
+        }
+        if (audio) {
+          audio.currentTime = Math.min(S.t, audio.duration || S.t || 0);
+          audio.volume = Math.max(0, Math.min(1, S.volume / 100));
+          audio.muted = S.muted;
+          audio.play().catch(() => {});
         }
         playInterval = setInterval(() => {
           if (video && S.reversed) {
@@ -2406,37 +2996,140 @@
       } else {
         clearInterval(playInterval);
         if (video) video.pause();
+        if (audio) audio.pause();
       }
     }
     function skip(s) {
       S.t = Math.max(0, Math.min(S.dur, S.t + s));
       const video = previewVideo();
       if (video) video.currentTime = Math.min(S.t, video.duration || S.t);
+      const audio = document.getElementById('preview-audio');
+      if (audio) audio.currentTime = Math.min(S.t, audio.duration || S.t);
       updateTime();
+    }
+    function restartPreview() {
+      S.t = 0;
+      const video = previewVideo();
+      if (video) {
+        video.currentTime = 0;
+        if (S.playing) video.play().catch(() => {});
+      }
+      const audio = document.getElementById('preview-audio');
+      if (audio) {
+        audio.currentTime = 0;
+        if (S.playing) audio.play().catch(() => {});
+      }
+      updateTime();
+      toast('Restarted preview');
     }
     function toggleMute() {
       S.muted = !S.muted;
       const video = previewVideo();
       if (video) video.muted = S.muted;
-      document.getElementById('mute-btn').textContent = S.muted ? 'ðŸ”‡' : 'ðŸ”Š';
+      const audio = document.getElementById('preview-audio');
+      if (audio) audio.muted = S.muted;
+      document.getElementById('mute-btn').textContent = S.muted ? 'Muted' : 'Sound';
       toast(S.muted ? 'Muted' : 'Unmuted');
     }
     function updateTime() {
+      S.t = Math.max(0, Math.min(S.t || 0, S.dur || 0.1));
       const fmt = s => { const m = Math.floor(s / 60); return String(m).padStart(2, '0') + ':' + String(Math.floor(s % 60)).padStart(2, '0'); };
       document.getElementById('cur-time').textContent = fmt(S.t);
       document.getElementById('tot-time').textContent = '/ ' + fmt(S.dur);
       document.getElementById('dur-display').textContent = fmt(S.dur);
-      document.getElementById('playhead').style.left = (S.t / S.dur * 100) + '%';
+      document.getElementById('playhead').style.left = timelinePctFromTime(S.t) + '%';
+      renderOverlays();
     }
 
     // Timeline click to seek
     document.getElementById('tl-tracks').addEventListener('click', e => {
+      if (S.suppressTimelineClick) {
+        S.suppressTimelineClick = false;
+        return;
+      }
       if (e.target.classList.contains('clip')) return;
       const rect = e.currentTarget.getBoundingClientRect();
-      S.t = ((e.clientX - rect.left) / rect.width) * S.dur;
+      const clickedPct = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      S.t = Math.max(0, Math.min(S.dur, timeFromTimelinePct(clickedPct)));
       const video = previewVideo();
       if (video) video.currentTime = Math.min(S.t, video.duration || S.t);
       updateTime();
+    });
+
+    document.getElementById('tl-tracks').addEventListener('pointerdown', e => {
+      const clip = e.target.closest('.clip');
+      if (!clip) return;
+      e.preventDefault();
+      e.stopPropagation();
+      selectClip(clip);
+      const row = clip.parentElement;
+      const rowRect = row.getBoundingClientRect();
+      const clipRect = clip.getBoundingClientRect();
+      const edge = 10;
+      const mode = e.clientX - clipRect.left <= edge ? 'resize-left'
+        : clipRect.right - e.clientX <= edge ? 'resize-right'
+          : 'move';
+      const b = clipBounds(clip);
+      S.timelineDrag = {
+        clip,
+        row,
+        rowWidth: rowRect.width,
+        startX: e.clientX,
+        startLeft: b.left,
+        startWidth: b.width,
+        mode,
+        moved: false
+      };
+      clip.setPointerCapture?.(e.pointerId);
+    });
+
+    document.getElementById('tl-tracks').addEventListener('pointermove', e => {
+      const drag = S.timelineDrag;
+      const hoverClip = e.target.closest('.clip');
+      if (!drag && hoverClip) {
+        const rect = hoverClip.getBoundingClientRect();
+        hoverClip.style.cursor = (e.clientX - rect.left <= 10 || rect.right - e.clientX <= 10) ? 'ew-resize' : 'grab';
+      }
+      if (!drag) return;
+      const deltaPct = ((e.clientX - drag.startX) / Math.max(1, drag.rowWidth)) * 100;
+      if (Math.abs(deltaPct) > 0.15) drag.moved = true;
+      if (drag.mode === 'move') {
+        setClipBounds(drag.clip, drag.startLeft + deltaPct, drag.startWidth);
+      } else if (drag.mode === 'resize-left') {
+        const nextLeft = drag.startLeft + deltaPct;
+        const maxLeft = drag.startLeft + drag.startWidth - secondsToPct(0.35);
+        const clampedLeft = Math.max(0, Math.min(maxLeft, nextLeft));
+        setClipBounds(drag.clip, clampedLeft, drag.startWidth + drag.startLeft - clampedLeft);
+      } else {
+        setClipBounds(drag.clip, drag.startLeft, drag.startWidth + deltaPct);
+      }
+    });
+
+    window.addEventListener('pointerup', () => {
+      if (!S.timelineDrag) return;
+      if (S.timelineDrag.moved) {
+        const b = clipBounds(S.timelineDrag.clip);
+        toast('Clip adjusted: ' + pctToTime(b.left).toFixed(1) + 's - ' + pctToTime(b.left + b.width).toFixed(1) + 's');
+        S.suppressTimelineClick = true;
+        schedSave();
+      }
+      S.timelineDrag = null;
+    });
+
+    window.addEventListener('keydown', event => {
+      if (!S.selectedClip || ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        nudgeSelectedClip(event.shiftKey ? -5 : -1);
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        nudgeSelectedClip(event.shiftKey ? 5 : 1);
+      }
+      if ((event.key === 's' || event.key === 'S') && !event.ctrlKey && !event.metaKey) {
+        event.preventDefault();
+        splitAtPlayhead();
+      }
     });
 
     // Ruler
@@ -2454,15 +3147,17 @@
     buildRuler();
 
     function zoom(d) { S.zoom = Math.max(25, Math.min(400, S.zoom + d)); document.getElementById('zoom-lbl').textContent = S.zoom + '%'; }
-    function tlZoom(d) { S.tlZoom = Math.max(0.5, Math.min(5, S.tlZoom + d)); document.getElementById('tl-zoom').textContent = S.tlZoom + 'Ã—'; buildRuler(); }
+    function tlZoom(d) { S.tlZoom = Math.max(0.5, Math.min(5, S.tlZoom + d)); document.getElementById('tl-zoom').textContent = S.tlZoom + 'x'; buildRuler(); }
 
     // Props
     function propChange(prop, val, sl) {
-      const suffixes = { rotate: 'Â°', opacity: '%', volume: '%', fadeIn: 's', fadeOut: 's', scale: '', x: '', y: '', pitch: '' };
+      const suffixes = { rotate: 'deg', opacity: '%', volume: '%', fadeIn: 's', fadeOut: 's', scale: '', x: '', y: '', pitch: '' };
       sl.nextElementSibling.textContent = val + (suffixes[prop] || '');
       if (['scale', 'rotate', 'opacity', 'x', 'y'].includes(prop)) S.transform[prop] = parseFloat(val);
       if (prop === 'volume') S.volume = parseFloat(val);
       applyPreviewStyles();
+      const audio = document.getElementById('preview-audio');
+      if (audio) audio.volume = Math.max(0, Math.min(1, S.volume / 100));
       schedSave();
     }
     function colorChange(prop, val, sl) {
@@ -2475,7 +3170,7 @@
       S.speed = v;
       document.querySelectorAll('.sp-btn').forEach(b => b.classList.toggle('on', parseFloat(b.textContent) === v));
       applyPreviewStyles();
-      toast('Speed: ' + v + 'Ã—');
+      toast('Speed: ' + v + 'x');
     }
 
     // Export options
@@ -2488,7 +3183,7 @@
     function pickOpt(el, group) {
       el.closest('.opt-row').querySelectorAll('.opt').forEach(o => o.classList.remove('on'));
       el.classList.add('on');
-      const raw = el.textContent.trim().replace(/\s*⭐.*/, '');
+      const raw = el.textContent.trim().replace(/\s*Pro.*/, '');
       const val = group === 'fps' ? parseInt(raw) : raw.toLowerCase();
       if (group === 'res') S.expSettings.res = raw;
       if (group === 'fps') S.expSettings.fps = val;
@@ -2533,11 +3228,19 @@
 
     function renderExportFrame(ctx, video, width, height) {
       ctx.save();
-      ctx.fillStyle = '#000';
+      ctx.fillStyle = S.background?.type === 'color' ? S.background.value : '#000';
       ctx.fillRect(0, 0, width, height);
+      if (S.background?.type === 'gradient') {
+        const bg = ctx.createLinearGradient(0, 0, width, height);
+        bg.addColorStop(0, '#16162e');
+        bg.addColorStop(1, S.background.value.includes('#0b4a4f') ? '#0b4a4f' : S.background.value.includes('#3b3020') ? '#3b3020' : '#441641');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, width, height);
+      }
       const vw = video.videoWidth || width;
       const vh = video.videoHeight || height;
-      const scale = Math.max(width / vw, height / vh) * ((S.transform.scale || 100) / 100);
+      const baseScale = S.cropMode === 'contain' ? Math.min(width / vw, height / vh) : Math.max(width / vw, height / vh);
+      const scale = baseScale * ((S.transform.scale || 100) / 100);
       const dw = vw * scale;
       const dh = vh * scale;
       const dx = (width - dw) / 2 + (S.transform.x || 0) * (width / 220);
@@ -2549,8 +3252,12 @@
         `saturate(${100 + (c.saturation || 0)}%)`,
         c.lut === 'B&W' || S.activeFX.has('B&W') ? 'grayscale(100%)' : '',
         c.lut === 'Warm' ? 'sepia(18%) saturate(125%)' : '',
+        c.lut === 'Cool' ? 'hue-rotate(185deg) saturate(112%)' : '',
+        c.lut === 'Cinematic' ? 'contrast(118%) saturate(115%) brightness(96%)' : '',
+        c.lut === 'Neon' ? 'saturate(180%) contrast(120%)' : '',
         c.lut === 'Vintage' ? 'sepia(35%) contrast(92%) saturate(78%)' : '',
-        S.activeFX.has('Blur') ? 'blur(2px)' : ''
+        S.activeFX.has('Blur') ? 'blur(2px)' : '',
+        S.activeFX.has('VHS') ? 'sepia(30%) contrast(125%) saturate(85%)' : ''
       ].filter(Boolean).join(' ');
       ctx.translate(width / 2, height / 2);
       ctx.rotate((S.transform.rotate || 0) * Math.PI / 180);
@@ -2570,15 +3277,29 @@
         ctx.fillStyle = 'rgba(255,255,255,0.18)';
         ctx.fillRect(0, 0, width, height);
       }
-      if (S.titleText) {
-        ctx.fillStyle = '#fff';
+      if (S.activeFX.has('Film Grain')) {
+        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        for (let i = 0; i < 260; i++) ctx.fillRect(Math.random() * width, Math.random() * height, 1, 1);
+      }
+      if (S.activeTransition && video.currentTime < 0.6) {
+        const alpha = Math.max(0, 0.85 - video.currentTime / 0.6);
+        ctx.fillStyle = `rgba(0,0,0,${alpha})`;
+        ctx.fillRect(0, 0, width, height);
+      }
+      Array.from(document.querySelectorAll('.clip-t[data-text]')).filter(clip => {
+        const b = clipBounds(clip);
+        const p = timelinePctFromTime(video.currentTime || S.t);
+        return p >= b.left && p <= b.left + b.width;
+      }).forEach(clip => {
+        const color = clip.dataset.color || '#ffffff';
+        ctx.fillStyle = color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
-        ctx.font = `900 ${Math.max(24, width * 0.055)}px Outfit, Arial, sans-serif`;
+        ctx.font = `900 ${Math.max(18, width * (clip.dataset.style === 'caption' ? 0.038 : 0.055))}px Outfit, Arial, sans-serif`;
         ctx.shadowColor = '#000';
         ctx.shadowBlur = 10;
-        drawWrappedText(ctx, S.titleText, width / 2, height * 0.12, width * 0.82, width * 0.07);
-      }
+        drawWrappedText(ctx, clip.dataset.text || clip.textContent.trim(), width * ((parseFloat(clip.dataset.x) || 50) / 100), height * ((parseFloat(clip.dataset.y) || 18) / 100), width * 0.82, width * 0.07);
+      });
       if (S.captionText) {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -2721,20 +3442,20 @@
             duration: ((parseFloat(clip.style.width) || 0) / 100) * S.dur,
             src: clip.dataset.mediaId || '',
             transform: S.transform,
-            filters: [{ colorGrade: S.colorGrade, fx: Array.from(S.activeFX), captions: S.captionText }]
+            filters: [{ colorGrade: S.colorGrade, fx: Array.from(S.activeFX), captions: S.captionText, cropMode: S.cropMode, transition: S.activeTransition, background: S.background, textPosition: S.textPosition }]
           })),
           status: 'draft',
           lastEditedAt: new Date()
         })
       });
-      if (d && d.success) document.getElementById('save-status').textContent = 'âœ“ Saved ' + new Date().toLocaleTimeString();
-      else document.getElementById('save-status').textContent = 'âœ• Save failed';
+      if (d && d.success) document.getElementById('save-status').textContent = 'Saved ' + new Date().toLocaleTimeString();
+      else document.getElementById('save-status').textContent = 'Save failed';
     }
 
     // AI Tools
     function runAI(type) {
       const names = { 'auto-captions': 'Auto Captions', 'remove-bg': 'Background Removal', 'beat-sync': 'Beat Auto-Cut', 'stabilize': 'Stabilization', 'enhance': 'Super Resolution', 'voice': 'Voice Changer', 'portrait': 'Portrait Enhance', 'auto-edit': 'Auto Edit' };
-      toast('Running AI: ' + (names[type] || type) + '... â³');
+      toast('Running AI: ' + (names[type] || type) + '...');
       setTimeout(() => {
         if (type === 'auto-captions') {
           generateCaptions();
@@ -2744,9 +3465,9 @@
           addPreviewBadge('BG REMOVED');
           applyPreviewStyles();
         } else if (type === 'beat-sync') {
-          addClip('fx', 'âš¡ Beat Cut 01');
-          addClip('fx', 'âš¡ Beat Cut 02');
-          addClip('fx', 'âš¡ Beat Cut 03');
+          addClip('fx', 'Beat Cut 01');
+          addClip('fx', 'Beat Cut 02');
+          addClip('fx', 'Beat Cut 03');
         } else if (type === 'stabilize') {
           S.ai.stabilized = true;
           S.transform.scale = Math.max(S.transform.scale || 100, 105);
@@ -2764,16 +3485,16 @@
           S.speed = 1.05;
           const video = previewVideo();
           if (video) video.playbackRate = S.speed;
-          addAudio('ðŸŽ­ AI Voice Effect');
+          addAudio('AI Voice Effect');
         } else if (type === 'portrait') {
           S.colorGrade.brightness = 10;
           S.colorGrade.saturation = 8;
           addPreviewBadge('PORTRAIT');
           applyPreviewStyles();
         } else if (type === 'auto-edit') {
-          addClip('text', 'ðŸ”¤ AI Title');
-          addClip('fx', 'âœ¨ AI Transition');
-          addAudio('ðŸŽµ AI Music Bed');
+          addClip('text', 'AI Title');
+          addClip('fx', 'AI Transition');
+          addAudio('AI Music Bed');
           addCaptionOverlay('AI auto edit ready');
         }
         schedSave();
@@ -2826,14 +3547,35 @@
       event.dataTransfer.dropEffect = 'copy';
     });
 
+    document.getElementById('prev-screen').addEventListener('pointerdown', event => {
+      if (!event.target.classList.contains('text-overlay')) return;
+      event.preventDefault();
+      S.textDrag = true;
+      event.target.dataset.dragging = '1';
+      event.target.setPointerCapture?.(event.pointerId);
+    });
+
+    document.getElementById('prev-screen').addEventListener('pointermove', event => {
+      if (!S.textDrag) return;
+      moveTextOverlay(event.clientX, event.clientY);
+    });
+
+    window.addEventListener('pointerup', () => {
+      if (!S.textDrag) return;
+      S.textDrag = false;
+      document.querySelectorAll('.text-overlay[data-dragging="1"]').forEach(el => delete el.dataset.dragging);
+      toast('Text position updated');
+      schedSave();
+    });
+
     // Make inline HTML handlers reliable in every browser/dev-server mode.
     Object.assign(window, {
-      addAudio, addClip, addSticker, addToTimeline, addTransition, applyFX, applyLUT, applyTpl,
-      addCaptionOverlay, addCustomText, addPreviewBadge, addTextOverlay, applyPreviewStyles, closeExport, colorChange, delSelected, doExport, dragMedia,
-      generateCaptions, handleUpload, loadPreview, openExport, pickOpt, propChange, redo, renameProject,
-      runAI, saveProject, selectClip, setAspect, setExp, setSpeed,
-      setAudioEffect, setTool, skip, splitAtPlayhead, switchPanel, switchRpanel, tlZoom, toast,
-      toggleFlip, toggleLoop, toggleMute, togglePlay, toggleReverse, translateCaptions, undo, zoom
+      addAudio, addClip, addSticker, addToTimeline, addTransition, applyCaptions, applyFX, applyLUT, applyTpl,
+      addCaptionOverlay, addCustomText, addPreviewBadge, addTextOverlay, applyPreviewStyles, clearBackground, closeExport, colorChange, delSelected, doExport, dragMedia,
+      generateCaptions, handleAudioUpload, handleUpload, loadPreview, nudgeSelectedClip, openExport, pickOpt, propChange, redo, renameProject,
+      handleBackgroundUpload, runAI, saveProject, selectAudio, addSelectedAudio, selectClip, setAspect, setBackground, setExp, setSpeed, setTextColor, setTextStyle,
+      restartPreview, setAudioEffect, setCropMode, setTool, skip, splitAtPlayhead, switchPanel, switchRpanel, tlZoom, toast,
+      toggleFlip, toggleLoop, toggleMute, togglePlay, toggleReverse, trimSelectedClip, undo, updateTextDraft, useTextPreset, zoom
     });
 
     window.addEventListener('error', event => {
